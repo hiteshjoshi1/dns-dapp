@@ -1,0 +1,8 @@
+#all {
+    overflow-y: scroll;
+    height:800px;
+    background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg');
+}
+.main-container {
+    overflow-x: hidden !important;
+}

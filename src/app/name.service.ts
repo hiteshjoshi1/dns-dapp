@@ -1,0 +1,142 @@
+import { Injectable } from '@angular/core';
+import {Web3Service} from './util/web3.service';
+import dns_contract_json from './../../build/contracts/DNSRegistry.json';
+import web3 from 'web3-utils';
+
+@Injectable()
+export class NameService {
+
+DNSRegistry: any;
+  constructor(private web3Service: Web3Service) {
+    }
+
+  initializeContract() {
+    this.web3Service.artifactsToContract(dns_contract_json)
+      .then((DNSAbstraction) => {
+        this.DNSRegistry = DNSAbstraction;
+      });
+      }
+
+  public isNameAvailable(name : string) {   
+    return this.DNSRegistry.deployed().then(function (instance) {
+      return instance.checkNameExists.call(name);
+    }).then(function (reserved) {
+      console.log(reserved);
+      return reserved;
+    }
+      );
+  } 
+
+  public reserveName(name : string, fee: string)  {
+    
+    return this.DNSRegistry.deployed().then((instance) =>{
+      return instance.reserveName(name,
+         { from: this.web3Service.activeAccount, value: web3.toWei(fee, "ether")})
+      .then(function(result) {
+        console.log(result);
+    }).then( () => {
+      return instance.checkNameExists.call(name).then(function (reserved) {
+        console.log(reserved);
+        return reserved;
+      });
+    });
+  });
+}
+
+public getPrice(name: string) {
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.checkNamePrice.call(name);
+  }).then(function (price) {
+    console.log(price);
+    return price;
+    });
+}
+
+public bidOnName(name : string, bid: string) {
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.bid(name, 
+      { from: this.web3Service.activeAccount, value: web3.toWei(bid, "ether")})
+      .then((result) => {
+        console.log(result);
+        return true;
+        },(ex) => {
+          console.log(ex);
+          return false;
+        });
+  // .then( () => {
+  //   return instance.getHighestBidSoFar.call(name).then(function (reserved) {
+  //     console.log(reserved);
+  //     return reserved;
+  //   });
+  // });
+});
+}
+
+public getOwner(name : String) {
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.getCurrentOwnerOfName.call(name).then(function (owner) {
+    console.log(owner);
+    return owner;
+    });
+});
+}
+
+public getHighestBid(name : String) {
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.getHighestBidSoFar.call(name).then(function (bidValue) {
+    console.log(bidValue);
+    return bidValue;
+    });
+});
+}
+
+public sendEtherToName(name: String, amount: number){
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.sendEtherToName(name, { from: this.web3Service.activeAccount, value: web3.toWei(amount, "ether")})
+    .then((result) => {
+    console.log(result);
+    return true;
+    },(ex) => {
+      console.log(ex);
+      return false;
+    });
+});
+}
+
+public acceptBidAndTransfer(name: String){
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.acceptBidAndTransferOwnerShip(name, { from: this.web3Service.activeAccount})
+    .then((result) => {
+    console.log(result);
+    return true;
+    },(ex) => {
+      console.log(ex);
+      return false;
+    });
+});
+}
+
+public withdrawBid(name: String){
+  return this.DNSRegistry.deployed().then((instance) => {
+    return instance.getHighestBidder.call(name).then( 
+      (bidder) => {
+        console.log("bidder",bidder);
+        if(bidder != this.web3Service.activeAccount ){
+          return instance.withdrawOverBiddenBid(name, { from: this.web3Service.activeAccount})
+          .then((result) => {
+              console.log(result);
+              return "Withdrawn";
+          },(ex) => {
+            console.log(ex);
+            return "Exception";
+          });
+        }
+        else{
+          return "Cannot withdraw Highest bid";
+        }
+      } 
+    )
+  });
+}
+
+}

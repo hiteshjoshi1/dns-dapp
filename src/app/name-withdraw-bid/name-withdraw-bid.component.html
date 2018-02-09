@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-block p-5 bg-light">
+       <h3>Withdraw your bid</h3>
+      <hr>
+          <div class="form-group"> 
+           <form [formGroup]="form" (ngSubmit)="withdrawBid()">
+            <label for="name">Name</label>
+            <input type="text" name="name"
+            id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
+          
+            <button type="submit" [disabled]="!form.valid" class="btn btn-dark">Submit</button>
+            </form>
+
+          </div>
+          {{withdrawn}}
+    </div>
+  </div>

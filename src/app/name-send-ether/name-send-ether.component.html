@@ -1,0 +1,19 @@
+<div class="card">
+    <div class="card-block p-5 bg-light">
+       <h3>Send Ether</h3>
+      <hr>
+          <div class="form-group"> 
+           <form [formGroup]="form" (ngSubmit)="sendEther()">
+            <label for="name">Name</label>
+            <input type="text" name="name"
+            id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
+          
+            <label for="sentEther">Amount to Send</label>
+            <input type="text" name="number"
+            id="sentEther" formControlName="sentEtherUsd"  class="form-control"  aria-describedby="sentEtherHelp" placeholder="Enter Amount to send"> <small id="feeHelp" class="form-text text-muted">Show some ether to a name</small>
+            <button type="submit" [disabled]="!form.valid" class="btn btn-dark">Submit</button>
+            </form>
+          </div>
+          {{etherSent}}
+    </div>
+  </div>
