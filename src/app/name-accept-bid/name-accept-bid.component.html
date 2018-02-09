@@ -4,14 +4,15 @@
       <hr>
           <div class="form-group"> 
            <form [formGroup]="form" (ngSubmit)="acceptBid()">
-            <label for="name">Name</label>
             <input type="text" name="name"
             id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
           
-            <button type="submit" [disabled]="!form.valid" class="btn btn-dark">Submit</button>
+            <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal7">Submit</button>
             </form>
 
           </div>
           {{bidAccepted}}
     </div>
   </div>
+
+  <app-modal #modal modalId="modal7"></app-modal>

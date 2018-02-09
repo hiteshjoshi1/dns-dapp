@@ -1,7 +1,8 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,OnInit,ViewChild } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-name-send-ether',
@@ -12,7 +13,9 @@ export class NameSendEtherComponent implements OnInit {
 
   form: FormGroup;
   etherSent : Boolean;
-  
+  @ViewChild('modal')
+  private _modal: ModalComponent;
+
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
      }
@@ -38,7 +41,7 @@ export class NameSendEtherComponent implements OnInit {
  public sendEther(){
   this.nameService.sendEtherToName(this.form.value.nameUsd, this.form.value.sentEtherUsd)
   .then(res=> {
-    this.etherSent = res;
+    this._modal._displayResult = res;
     this.form.reset();
 });
   

@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
+import { ModalComponent } from '../modal/modal.component';
 
 
 @Component({
@@ -12,7 +13,9 @@ import { from } from 'rxjs/observable/from';
 export class NameReserveComponent {
 
   _reserveForm: FormGroup;
-  reserved: Boolean;
+
+  @ViewChild('modal')
+  private _modal: ModalComponent;
   
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
@@ -46,7 +49,7 @@ export class NameReserveComponent {
      let address = this._reserveForm.value.addressUsd;
      let fee = this._reserveForm.value.reservationFee;
      this.nameService.reserveName(name,String(fee)).then((res)=>{
-      this.reserved = res;
+      this._modal._displayResult = res;
       this._reserveForm.reset();
      })
   

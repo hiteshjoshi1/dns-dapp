@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-name-bid-new',
@@ -11,7 +12,8 @@ import { from } from 'rxjs/observable/from';
 export class NameBidNewComponent {
 
   _reserveForm: FormGroup;
-  bidAccepted : Boolean;
+  @ViewChild('modal')
+  private _modal: ModalComponent;
   
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
@@ -44,7 +46,7 @@ export class NameBidNewComponent {
      let name = this._reserveForm.value.nameUsd;
      let address = this._reserveForm.value.addressUsd;
      let fee = this._reserveForm.value.bidValue;
-     this.nameService.bidOnName(name,String(fee)).then(result => this.bidAccepted = result );
+     this.nameService.bidOnName(name,String(fee)).then(result => this._modal._displayResult = result );
      this._reserveForm.reset(); 
   }
 

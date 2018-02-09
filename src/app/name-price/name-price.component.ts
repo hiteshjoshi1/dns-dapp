@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ViewChild,OnInit } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
+import { ModalComponent } from '../modal/modal.component';
 
 
 @Component({
@@ -13,6 +14,9 @@ export class NamePriceComponent implements OnInit {
 
   form: FormGroup;
   price : number;
+
+  @ViewChild('modal')
+  private _modal: ModalComponent;
   
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
@@ -35,7 +39,7 @@ export class NamePriceComponent implements OnInit {
 
  public getNamePrice(){
   this.nameService.getPrice(this.form.value.nameUsd).then(value=>{
-      this.price = value
+    this._modal._displayResult= value;
   });
   
   this.form.reset();

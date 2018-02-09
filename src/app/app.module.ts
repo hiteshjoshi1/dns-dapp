@@ -20,7 +20,7 @@ import { NameSendEtherComponent } from './name-send-ether/name-send-ether.compon
 import { NameHighestBidComponent } from './name-highest-bid/name-highest-bid.component';
 import { NameOwnerComponent } from './name-owner/name-owner.component';
 import { NameAcceptBidComponent } from './name-accept-bid/name-accept-bid.component';
-import { NameUserBidComponent } from './name-user-bid/name-user-bid.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,7 @@ import { NameUserBidComponent } from './name-user-bid/name-user-bid.component';
     NameHighestBidComponent,
     NameOwnerComponent,
     NameAcceptBidComponent,
-    NameUserBidComponent
+    ModalComponent
   ],
   imports: [
     BrowserModule,

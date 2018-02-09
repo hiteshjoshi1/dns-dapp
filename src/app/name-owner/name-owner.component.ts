@@ -1,8 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
-
+import { ModalComponent } from '../modal/modal.component';
 
 
 @Component({
@@ -14,7 +14,9 @@ export class NameOwnerComponent {
 
   form: FormGroup;
   owner : string;
-  
+  @ViewChild('modal')
+  private _modal: ModalComponent;
+
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
      }
@@ -36,7 +38,7 @@ export class NameOwnerComponent {
 
  public getOwner(){
   this.nameService.getOwner(this.form.value.nameUsd).then(res=> {
-       this.owner = res;
+    this._modal._displayResult = res;
   });
   
   this.form.reset();

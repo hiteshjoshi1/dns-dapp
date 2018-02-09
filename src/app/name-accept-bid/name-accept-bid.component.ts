@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {NameService} from './../name.service'; 
 import {FormControl, FormGroup, Validators, FormBuilder} from'@angular/forms';
 import { from } from 'rxjs/observable/from';
+import { ModalComponent } from '../modal/modal.component';
 
 @Component({
   selector: 'app-name-accept-bid',
@@ -11,7 +12,8 @@ import { from } from 'rxjs/observable/from';
 export class NameAcceptBidComponent implements OnInit {
 
   form: FormGroup;
-  bidAccepted:Boolean;
+  @ViewChild('modal')
+  private _modal: ModalComponent;
   
     constructor(private formBuilder: FormBuilder, private nameService : NameService) {
       this.createForm();
@@ -31,7 +33,7 @@ export class NameAcceptBidComponent implements OnInit {
   public acceptBid()  {
     
     this.nameService.acceptBidAndTransfer(this.form.value.nameUsd)
-    .then(value=>this.bidAccepted = value);
+    .then(value=>this._modal._displayResult = value);
      this.form.reset();
     
   }
