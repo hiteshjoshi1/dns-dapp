@@ -28,11 +28,18 @@ From the root folder - contract
 - Download the source
 - npm install
 - truffle compile
-- truffle migrate
+- truffle migrate *
 - truffle test [Optional step]
 - ng build --prod
 - ng serve
 
+* Note of truffle migrate
+Since this step deploys the contract to the blockchain. If you are using a private or actual Ethereum blockchain, please make sure that the account you have used in truffle.js is unlocked.
+I have used my coinbase in truffle.js, so here goes the command.
+
+```
+web3.personal.unlockAccount(eth.coinbase)
+```
 
 ### Metamask is a dependency for the project
 
@@ -47,3 +54,5 @@ Note - I tried running the project with Ganache. At this point Ganache and metam
 
 https://github.com/MetaMask/metamask-extension/issues/2941
 https://github.com/MetaMask/metamask-extension/issues/1999
+
+TODO - remove build folder, let contract abstraction auto generate with truffle compile
