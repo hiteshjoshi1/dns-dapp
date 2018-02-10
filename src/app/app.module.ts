@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
-import {MetaModule} from './meta/meta.module';
 import { NameDnsComponent } from './name-dns/name-dns.component';
 import { NameBidComponent } from './name-bid/name-bid.component';
 import { NameHomeComponent } from './name-home/name-home.component';
@@ -21,6 +20,7 @@ import { NameHighestBidComponent } from './name-highest-bid/name-highest-bid.com
 import { NameOwnerComponent } from './name-owner/name-owner.component';
 import { NameAcceptBidComponent } from './name-accept-bid/name-accept-bid.component';
 import { ModalComponent } from './modal/modal.component';
+import { Web3Service } from './util/web3.service';
 
 @NgModule({
   declarations: [
@@ -44,11 +44,10 @@ import { ModalComponent } from './modal/modal.component';
     FormsModule,
     HttpModule,
     AppRoutingModule,
-    MetaModule,
     ReactiveFormsModule
 
   ],
-  providers: [NameService],
+  providers: [NameService,Web3Service],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -35,9 +35,7 @@ export class NameReserveComponent {
         //    ],
            reservationFee: ['',
            Validators.compose([
-           Validators.required,
-            Validators.max(10),
-            Validators.min(0.1),
+          //  Validators.required  
           ]),
             ]
 

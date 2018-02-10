@@ -34,14 +34,15 @@ export class Web3Service {
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
-    this.web3.eth.getAccounts((err, accs) => {
+    this.web3.eth.getAccounts((err, accs)=> {
       if (err != null) {
         console.warn('There was an error fetching your accounts.');
         return;
       }
-      this.activeAccount = accs[0];
-  });
-    // setInterval(() => this.refreshAccounts(), 100);
+       this.activeAccount = accs[0];
+    });
+    // to get main account
+    setInterval(() => this.refreshAccounts(), 100);
   }
 
   public getWeb3(): Web3 {
@@ -63,27 +64,21 @@ export class Web3Service {
 
   private refreshAccounts() {
     this.web3.eth.getAccounts((err, accs) => {
-      console.log('Refreshing accounts');
-      if (err != null) {
+       if (err != null) {
         console.warn('There was an error fetching your accounts.');
         return;
       }
-
       // Get the initial account balance so it can be displayed.
       if (accs.length === 0) {
         console.warn('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
         return;
-      }
-      console.log(accs);
+      }      
       if (!this.accounts || this.accounts.length !== accs.length || this.accounts[0] !== accs[0]) {
-        console.log('Observed new accounts');
-
         this.accountsObservable.next(accs);
         this.accounts = accs;
-      }
-
+        this.activeAccount = accs[0];
+        }
       this.ready = true;
     });
   }
-
 }
