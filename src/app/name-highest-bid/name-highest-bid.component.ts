@@ -33,8 +33,12 @@ export class NameHighestBidComponent {
       });
     }
   public getHighestBid()  {    
-    this.nameService.getHighestBid(this.form.value.nameUsd)
-    .then(value=>this._modal._displayResult = value);
+     let name = this.form.value.nameUsd;
+    this.nameService.getHighestBid(name)
+    .then(value=> {
+      value  = value/1000000000000000000;
+      this._modal._displayResult = "Highest Bid for : "+name+" is :"+value + " ether";
+    });
      this.form.reset();
     
   }

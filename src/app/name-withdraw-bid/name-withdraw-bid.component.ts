@@ -33,8 +33,7 @@ export class NameWithdrawBidComponent {
       });
     }
   public withdrawBid()  { 
-    // get your Bid... if exist withdraw   
-    this.nameService.withdrawBid(this.form.value.nameUsd)
+     this.nameService.withdrawBid(this.form.value.nameUsd)
     .then(value =>  this._modal._displayResult= value);
      this.form.reset();
     

@@ -92,7 +92,7 @@ contract DNSRegistry is Util, ProtectReEntry {
          // love shown to the developer
          bool created = false;
          if (sentOk) {
-            created = createNewDNSEntry(name);
+            created = createNewDNSEntry(name,reserveNameFee);
             // create the BidContainer
             BidContainer bidContainer = new BidContainer(reserveNameFee);
             // add the first bid
@@ -117,12 +117,12 @@ contract DNSRegistry is Util, ProtectReEntry {
      }
     
      // create the actual DNS entry - private curb inheritance
-    function createNewDNSEntry(bytes32 _name) private
+    function createNewDNSEntry(bytes32 _name, uint _reserveNameFee) private
       returns (bool _created)
      {
        dnsNameMap[_name].name = _name;
        dnsNameMap[_name].owner = msg.sender;
-       dnsNameMap[_name].price = 1; 
+       dnsNameMap[_name].price = _reserveNameFee; 
        dnsNameMap[_name].exists = true;
        return true;
      }

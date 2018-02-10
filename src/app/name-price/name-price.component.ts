@@ -39,7 +39,7 @@ export class NamePriceComponent implements OnInit {
 
  public getNamePrice(){
   this.nameService.getPrice(this.form.value.nameUsd).then(value=>{
-    this._modal._displayResult= value;
+    this._modal._displayResult= "Name price "+value;
   });
   
   this.form.reset();

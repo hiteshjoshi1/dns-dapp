@@ -125,7 +125,7 @@ public withdrawBid(name: String){
           return instance.withdrawOverBiddenBid(name, { from: this.web3Service.activeAccount})
           .then((result) => {
               console.log(result);
-              return "Withdrawn";
+              return "Bid Withdrawn";
           },(ex) => {
             console.log(ex);
             return "Exception";

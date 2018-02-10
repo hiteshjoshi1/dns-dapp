@@ -38,6 +38,7 @@ export class NameOwnerComponent {
 
  public getOwner(){
   this.nameService.getOwner(this.form.value.nameUsd).then(res=> {
+    res = "Owner Address "+ res;
     this._modal._displayResult = res;
   });
   

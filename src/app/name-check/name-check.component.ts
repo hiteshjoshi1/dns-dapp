@@ -1,8 +1,9 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { NameService } from './../name.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { from } from 'rxjs/observable/from';
 import { ModalComponent } from '../modal/modal.component';
+import {Web3Service} from '../util/web3.service';
 
 @Component({
   selector: 'app-name-check',
@@ -11,6 +12,8 @@ import { ModalComponent } from '../modal/modal.component';
 })
 export class NameCheckComponent {
   form: FormGroup;
+  metamaskAcc: string;
+  web3Service: Web3Service;
 
   @ViewChild('modal')
   private _modal: ModalComponent;
@@ -31,11 +34,12 @@ export class NameCheckComponent {
     });
   }
   public isNameAvailable() {
-
-    this.nameService.isNameAvailable(this.form.value.nameUsd)
-      .then(value => this._modal._displayResult = value);
+      this.nameService.isNameAvailable(this.form.value.nameUsd)
+      .then(value => {
+        if(value) this._modal._displayResult = "Name Available";
+        else this._modal._displayResult = "Name Not Reserved";
+      });
     this.form.reset();
 
   }
-
 }

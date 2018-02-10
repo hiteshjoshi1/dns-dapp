@@ -28,14 +28,9 @@ export class NameReserveComponent {
           Validators.required,
           Validators.minLength(2)]),
             ],
-        // addressUsd: ['',
-        //   Validators.compose([
-        //   Validators.required,
-        //   Validators.maxLength(50)]),
-        //    ],
            reservationFee: ['',
            Validators.compose([
-          //  Validators.required  
+           Validators.required  
           ]),
             ]
 
@@ -47,13 +42,12 @@ export class NameReserveComponent {
      let address = this._reserveForm.value.addressUsd;
      let fee = this._reserveForm.value.reservationFee;
      this.nameService.reserveName(name,String(fee)).then((res)=>{
-      this._modal._displayResult = res;
+       if(res) this._modal._displayResult = "Name is now reserved for you!";
+       else this._modal._displayResult = "Name cannot be reserved!";
       this._reserveForm.reset();
-     })
-  
-    
-  
-    
+     }).catch((ex)=>{
+      this._modal._displayResult = "Exception occurred";
+     });    
   }
 
 }

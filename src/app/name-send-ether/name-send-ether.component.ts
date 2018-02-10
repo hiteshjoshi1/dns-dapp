@@ -41,9 +41,10 @@ export class NameSendEtherComponent implements OnInit {
  public sendEther(){
   this.nameService.sendEtherToName(this.form.value.nameUsd, this.form.value.sentEtherUsd)
   .then(res=> {
-    this._modal._displayResult = res;
+    if(res) this._modal._displayResult = this.form.value.sentEtherUsd +" Ether sent";
+    else this._modal._displayResult = "Ether not sent";
     this.form.reset();
-});
+   }).catch((ex)=> this._modal._displayResult = "Exception happened");
   
  
  } 

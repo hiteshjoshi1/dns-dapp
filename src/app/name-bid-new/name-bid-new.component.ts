@@ -26,11 +26,6 @@ export class NameBidNewComponent {
           Validators.required,
           Validators.minLength(2)]),
             ],
-        // addressUsd: ['',
-        //   Validators.compose([
-        //   Validators.required,
-        //   Validators.maxLength(50)]),
-        //    ],
            bidValue: ['',
            Validators.compose([
            Validators.required
@@ -46,7 +41,12 @@ export class NameBidNewComponent {
      let name = this._reserveForm.value.nameUsd;
      let address = this._reserveForm.value.addressUsd;
      let fee = this._reserveForm.value.bidValue;
-     this.nameService.bidOnName(name,String(fee)).then(result => this._modal._displayResult = result );
+     this.nameService.bidOnName(name,String(fee))
+     .then(result => { 
+       console.log(result);
+       if(result) this._modal._displayResult = "Bid Accepted";
+       else this._modal._displayResult = "Bid Not Accepted";
+       });
      this._reserveForm.reset(); 
   }
 
