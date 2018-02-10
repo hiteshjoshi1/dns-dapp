@@ -39,9 +39,9 @@ From the root folder - contract
 In order to run geth with metamask, please use the flag
 --rpccorsdomain="chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn 
 
-<code>
+```
 geth --identity "nodeA" --rpccorsdomain "*" --datadir=".\geth_data" -verbosity 6 --port 54259  --rpc --rpcapi "eth,net,web3" --rpcaddr "127.0.0.1" --rpcport 8545 --fast --networkid 15 --nodiscover --mine --minerthreads 1 --rpccorsdomain="chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn 
-</code>
+```
 
 Note - I tried running the project with Ganache. At this point Ganache and metamask integration has some problem so I used my locally running node instead
 
