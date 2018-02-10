@@ -1,19 +1,29 @@
 <div class="card">
-    <div class="card-block p-5 bg-light">
-      <h3>Bid on a Name</h3>
-      <hr>
-      <div class="form-group"> 
-          <form [formGroup]="_reserveForm" (ngSubmit)="bidOnName()">
-           
-           <input type="text" name="name"
-           id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Bid for..."> <small id="nameHelp" class="form-text text-muted"> Name you are biddin for.</small>
-           <!-- <label for="fee">Bid</label> -->
-           <input type="text" name="number"
-           id="fee" formControlName="bidValue"  class="form-control"  aria-describedby="feeHelp" placeholder="Enter Reservation Fee"> <small id="feeHelp" class="form-text text-muted">Bid Amount in Ether</small>
-          <button type="submit" [disabled]="!_reserveForm.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal8" >Submit</button>
-           </form>
-         </div>
+  <div class="card-block p-5 bg-light">
+    <h3>Bid on a Name</h3>
+    <hr>
+    <div class="form-group">
+      <form [formGroup]="_reserveForm" (ngSubmit)="bidOnName()">
+
+        <input type="text" name="name" id="name" formControlName="nameUsd" class="form-control" aria-describedby="nameHelp" placeholder="Bid for...">
+        <small id="nameHelp" class="form-text text-muted"> Name you are biddin for.</small>
+        <!-- error messages -->
+        <div *ngIf="_reserveForm.controls.nameUsd.touched && _reserveForm.controls.nameUsd.errors">
+
+          <div class="alert alert-danger" *ngIf="_reserveForm.controls.nameUsd.errors.required">
+            Name is required
+          </div>
+          <div class="alert alert-danger" *ngIf="_reserveForm.controls.nameUsd.errors.minlength">
+            Name should atleast have {{_reserveForm.controls.nameUsd.errors.minlength.requiredLength}} characters
+          </div>
+        </div>
+        <!-- <label for="fee">Bid</label> -->
+        <input type="text" name="number" id="fee" formControlName="bidValue" class="form-control" aria-describedby="feeHelp" placeholder="Enter Reservation Fee">
+        <small id="feeHelp" class="form-text text-muted">Bid Amount in Ether</small>
+        <button type="submit" [disabled]="!_reserveForm.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal8">Submit</button>
+      </form>
     </div>
   </div>
+</div>
 
-  <app-modal #modal modalId="modal8"></app-modal>
+<app-modal #modal modalId="modal8"></app-modal>

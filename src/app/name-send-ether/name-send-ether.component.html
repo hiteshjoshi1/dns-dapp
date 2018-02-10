@@ -1,19 +1,29 @@
 <div class="card">
-    <div class="card-block p-5 bg-light">
-       <h3>Send Ether</h3>
-      <hr>
-          <div class="form-group"> 
-           <form [formGroup]="form" (ngSubmit)="sendEther()">
-             <input type="text" name="name"
-            id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
-          
-      
-            <input type="text" name="number"
-            id="sentEther" formControlName="sentEtherUsd"  class="form-control"  aria-describedby="sentEtherHelp" placeholder="Enter Amount to send"> <small id="feeHelp" class="form-text text-muted">Show some ether to a name</small>
-            <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal6" >Submit</button>
-            </form>
-          </div>
-         </div>
-  </div>
+  <div class="card-block p-5 bg-light">
+    <h3>Send Ether</h3>
+    <hr>
+    <div class="form-group">
+      <form [formGroup]="form" (ngSubmit)="sendEther()">
+        <input type="text" name="name" id="name" formControlName="nameUsd" class="form-control" aria-describedby="nameHelp" placeholder="Enter Name">
+        <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
+        <!-- error messages -->
+        <div *ngIf="form.controls.nameUsd.touched && form.controls.nameUsd.errors">
 
-  <app-modal #modal modalId="modal6"></app-modal>
+          <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.required">
+            Name is required
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.minlength">
+            Name should atleast have {{form.controls.nameUsd.errors.minlength.requiredLength}} characters
+          </div>
+        </div>
+
+        <input type="text" name="number" id="sentEther" formControlName="sentEtherUsd" class="form-control" aria-describedby="sentEtherHelp"
+          placeholder="Enter Amount to send">
+        <small id="feeHelp" class="form-text text-muted">Show some ether to a name</small>
+        <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal6">Submit</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<app-modal #modal modalId="modal6"></app-modal>

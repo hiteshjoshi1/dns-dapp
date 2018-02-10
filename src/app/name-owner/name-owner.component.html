@@ -7,7 +7,16 @@
          
             <input type="text" name="name"
             id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
-          
+          <!-- error messages -->
+            <div *ngIf="form.controls.nameUsd.touched && form.controls.nameUsd.errors">
+                
+                        <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.required">
+                          Name is required
+                        </div>
+                        <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.minlength">
+                          Name should atleast have {{form.controls.nameUsd.errors.minlength.requiredLength}} characters
+                        </div>
+                      </div>
             <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal4" >Submit</button>
             </form>
 

@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import Web3 from 'web3';
-import {default as contract} from 'truffle-contract';
-import {Subject} from 'rxjs/Rx';
+import { default as contract } from 'truffle-contract';
+import { Subject } from 'rxjs/Rx';
 
 declare let window: any;
 
@@ -30,16 +30,16 @@ export class Web3Service {
 
       // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
       Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-    
+
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
-    this.web3.eth.getAccounts((err, accs)=> {
+    this.web3.eth.getAccounts((err, accs) => {
       if (err != null) {
         console.warn('There was an error fetching your accounts.');
         return;
       }
-       this.activeAccount = accs[0];
+      this.activeAccount = accs[0];
     });
     // to get main account
     setInterval(() => this.refreshAccounts(), 100);
@@ -50,7 +50,7 @@ export class Web3Service {
   }
 
   public async artifactsToContract(artifacts) {
-     if (!this.web3) {
+    if (!this.web3) {
       const delay = new Promise(resolve => setTimeout(resolve, 100));
       await delay;
       return await this.artifactsToContract(artifacts);
@@ -58,13 +58,13 @@ export class Web3Service {
 
     const contractAbstraction = contract(artifacts);
     contractAbstraction.setProvider(this.web3.currentProvider);
-     return contractAbstraction;
+    return contractAbstraction;
 
   }
 
   private refreshAccounts() {
     this.web3.eth.getAccounts((err, accs) => {
-       if (err != null) {
+      if (err != null) {
         console.warn('There was an error fetching your accounts.');
         return;
       }
@@ -72,12 +72,12 @@ export class Web3Service {
       if (accs.length === 0) {
         console.warn('Couldn\'t get any accounts! Make sure your Ethereum client is configured correctly.');
         return;
-      }      
+      }
       if (!this.accounts || this.accounts.length !== accs.length || this.accounts[0] !== accs[0]) {
         this.accountsObservable.next(accs);
         this.accounts = accs;
         this.activeAccount = accs[0];
-        }
+      }
       this.ready = true;
     });
   }

@@ -1,19 +1,30 @@
 <div class="card">
-    <div class="card-block p-5 bg-light">
-      <h3>Reserve a Name</h3>
-      <hr>
-      <div class="form-group"> 
-          <form [formGroup]="_reserveForm" (ngSubmit)="reserveName()">
-         
-           <input type="text" name="name"
-           id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Eype name here..."> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
-           <!-- <label for="fee">Reservation Fee</label> -->
-           
-           <input type="text" name="number"
-           id="fee" formControlName="reservationFee"  class="form-control"  aria-describedby="feeHelp" placeholder="Enter Reservation Fee..."> <small id="feeHelp" class="form-text text-muted">Show some love to the developer</small>
-          <button type="submit" [disabled]="!_reserveForm.valid" class="btn btn-primary"  data-toggle="modal" data-target="#modal1">Submit</button>
-           </form>
-         </div>
+  <div class="card-block p-5 bg-light">
+    <h3>Reserve a Name</h3>
+    <hr>
+    <div class="form-group">
+      <form [formGroup]="_reserveForm" (ngSubmit)="reserveName()">
+
+        <input type="text" name="name" id="name" formControlName="nameUsd" class="form-control" aria-describedby="nameHelp" placeholder="Eype name here...">
+        <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
+        <!-- error messages -->
+        <div *ngIf="form.controls.nameUsd.touched && form.controls.nameUsd.errors">
+
+          <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.required">
+            Name is required
+          </div>
+          <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.minlength">
+            Name should atleast have {{form.controls.nameUsd.errors.minlength.requiredLength}} characters
+          </div>
+        </div>
+        <!-- <label for="fee">Reservation Fee</label> -->
+
+        <input type="text" name="number" id="fee" formControlName="reservationFee" class="form-control" aria-describedby="feeHelp"
+          placeholder="Enter Reservation Fee...">
+        <small id="feeHelp" class="form-text text-muted">Show some love to the developer</small>
+        <button type="submit" [disabled]="!_reserveForm.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal1">Submit</button>
+      </form>
     </div>
   </div>
-  <app-modal #modal modalId="modal1"></app-modal>
+</div>
+<app-modal #modal modalId="modal1"></app-modal>

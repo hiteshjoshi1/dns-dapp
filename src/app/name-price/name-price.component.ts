@@ -27,7 +27,7 @@ export class NamePriceComponent implements OnInit {
         nameUsd: ['',
              Validators.compose([
              Validators.required,
-             Validators.minLength(4)]),
+             Validators.minLength(2)]),
             ]
 
 

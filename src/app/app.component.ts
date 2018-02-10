@@ -6,9 +6,9 @@ import { NameService } from './name.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']  
+  styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit{
+export class AppComponent implements OnInit {
   title = 'Consensys Tutorial on distributed DNS';
 
   constructor(private _nameService: NameService) {

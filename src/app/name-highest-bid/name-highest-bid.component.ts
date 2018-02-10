@@ -26,7 +26,7 @@ export class NameHighestBidComponent {
         nameUsd: ['',
              Validators.compose([
              Validators.required,
-             Validators.minLength(4)]),
+             Validators.minLength(2)]),
             ]
 
 
@@ -36,6 +36,7 @@ export class NameHighestBidComponent {
      let name = this.form.value.nameUsd;
     this.nameService.getHighestBid(name)
     .then(value=> {
+      //convert to Ether
       value  = value/1000000000000000000;
       this._modal._displayResult = "Highest Bid for : "+name+" is :"+value + " ether";
     });

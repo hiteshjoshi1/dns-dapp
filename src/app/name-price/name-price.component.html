@@ -1,15 +1,25 @@
 <div class="card">
-    <div class="card-block p-5 bg-light">
-      <h3>Check Name Price</h3>
-      <hr>
-      <form [formGroup]="form" (ngSubmit)="getNamePrice()">
-          <input type="text" name="name"
-          id="name" formControlName="nameUsd"  class="form-control"  aria-describedby="nameHelp" placeholder="Enter Name"> <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
-                 
-          <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal3">Submit</button>
-          </form>
+  <div class="card-block p-5 bg-light">
+    <h3>Check Name Price</h3>
+    <hr>
+    <form [formGroup]="form" (ngSubmit)="getNamePrice()">
+      <input type="text" name="name" id="name" formControlName="nameUsd" class="form-control" aria-describedby="nameHelp" placeholder="Enter Name">
+      <small id="nameHelp" class="form-text text-muted">Enter the Name you desire.</small>
 
-    </div>
+
+      <div *ngIf="form.controls.nameUsd.touched && form.controls.nameUsd.errors">
+
+        <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.required">
+          Name is required
+        </div>
+        <div class="alert alert-danger" *ngIf="form.controls.nameUsd.errors.minlength">
+          Name should atleast have {{form.controls.nameUsd.errors.minlength.requiredLength}} characters
+        </div>
+      </div>
+      <button type="submit" [disabled]="!form.valid" class="btn btn-primary" data-toggle="modal" data-target="#modal3">Submit</button>
+    </form>
+
   </div>
+</div>
 
-  <app-modal #modal modalId="modal3"></app-modal>
+<app-modal #modal modalId="modal3"></app-modal>
