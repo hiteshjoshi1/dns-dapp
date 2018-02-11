@@ -55,4 +55,9 @@ Note - I tried running the project with Ganache. At this point Ganache and metam
 https://github.com/MetaMask/metamask-extension/issues/2941
 https://github.com/MetaMask/metamask-extension/issues/1999
 
-TODO - remove build folder, let contract abstraction auto generate with truffle compile
+Screenshots
+
+![Scheme](screenshots/Screenshot0_compressed.PNG)
+
+![Scheme](screenshots/Screenshot1_compressed.PNG)
+
