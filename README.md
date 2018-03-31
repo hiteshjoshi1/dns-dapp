@@ -50,11 +50,7 @@ In order to run geth with metamask, please use the flag
 geth --identity "nodeA" --rpccorsdomain "*" --datadir=".\geth_data" -verbosity 6 --port 54259  --rpc --rpcapi "eth,net,web3" --rpcaddr "127.0.0.1" --rpcport 8545 --fast --networkid 15 --nodiscover --mine --minerthreads 1 --rpccorsdomain="chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn 
 ```
 
-Note - I tried running the project with Ganache. At this point Ganache and metamask integration has some problem so I used my locally running node instead
-
-https://github.com/MetaMask/metamask-extension/issues/2941
-https://github.com/MetaMask/metamask-extension/issues/1999
-
+You can use Ganache or any test net.
 Screenshots
 
 ![Scheme](screenshots/Screenshot0_compressed.PNG)

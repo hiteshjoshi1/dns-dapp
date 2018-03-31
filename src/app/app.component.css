@@ -1,8 +1,3 @@
-/* #all {
-    overflow-y: scroll;
-    height:800px;
-    background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg');
-} */
 .main-container {
     overflow-x: hidden !important;
 }
@@ -10,5 +5,5 @@
 .py-5 {
     overflow-y: scroll;
     height:800px;
-    background-image: url('./../assets/cover_event.jpg'); 
+    background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg');
 }

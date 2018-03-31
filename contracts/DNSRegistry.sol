@@ -293,10 +293,14 @@ contract DNSRegistry is Util, ProtectReEntry {
          return true;
      }
 
-     function checkNamePrice(string _name) public view returns(uint) {
-         bytes32  name = toBytes32(_name); 
+      function checkNamePrice(string _name) public view returns(uint){
+                  bytes32  name = toBytes32(_name); 
          require(hasOwner(name));
-         return dnsNameMap[name].price;         
+         uint highestBid = getHighestBidSoFar(_name);
+         uint lastTradedPrice = dnsNameMap[name].price;
+         if(highestBid>lastTradedPrice) return highestBid;
+         else return lastTradedPrice;
+         
      }
 
      function getCurrentOwnerOfName(string _name) public view returns(address) {
