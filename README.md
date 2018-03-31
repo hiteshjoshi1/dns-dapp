@@ -53,9 +53,9 @@ geth --identity "nodeA" --rpccorsdomain "*" --datadir=".\geth_data" -verbosity 6
 You can use Ganache or any test net.
 Screenshots
 
-![Scheme](screenshots/home.PNG)
+![Scheme](screenshots/home.png)
 
 ![Scheme](screenshots/bid_compressed.PNG)
 
-![Scheme](screenshots/bid_price.PNG)
+![Scheme](screenshots/bid_price.png)
 
