@@ -55,5 +55,7 @@ Screenshots
 
 ![Scheme](screenshots/Screenshot0_compressed.PNG)
 
+![Scheme](screenshots/bid_compressed.PNG)
+
 ![Scheme](screenshots/Screenshot1_compressed.PNG)
 
