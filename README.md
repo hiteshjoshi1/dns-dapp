@@ -50,6 +50,10 @@ In order to run geth with metamask, please use the flag
 geth --identity "nodeA" --rpccorsdomain "*" --datadir=".\geth_data" -verbosity 6 --port 54259  --rpc --rpcapi "eth,net,web3" --rpcaddr "127.0.0.1" --rpcport 8545 --fast --networkid 15 --nodiscover --mine --minerthreads 1 --rpccorsdomain="chrome-extension://nkbihfbeogaeaoehlefnkodbefgpgknn 
 ```
 
+Accompanying Blog
+https://medium.com/@achiever.hitesh/own-your-identity-in-blockchain-747a91100b39
+
+
 You can use Ganache or any test net.
 Screenshots
 
