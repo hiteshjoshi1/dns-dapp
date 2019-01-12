@@ -38,17 +38,11 @@ export class NameService {
         { from: this.web3Service.activeAccount, value: web3.utils.toWei(fee, "ether") })
         .then(function (result) {
           console.log(result);
+          return result;
         }).catch(err => {
           console.log(err);
-        })
-        .then(() => {
-          return instance.checkNameExists.call(name).then(function (reserved) {
-            console.log(reserved);
-            return reserved;
-          });
-        }).catch(err => {
-          console.log(err);
-        })
+        });
+
     });
   }
 

@@ -38,8 +38,10 @@ export class NamePriceComponent implements OnInit {
   }
 
  public getNamePrice(){
+   console.log(this.form.value.nameUsd);
   this.nameService.getPrice(this.form.value.nameUsd).then(value=>{
-    this._modal._displayResult= "Name price "+value;
+    value  = value/1000000000000000000;
+    this._modal._displayResult= `Name price ${value} ether `;
   });
   
   this.form.reset();

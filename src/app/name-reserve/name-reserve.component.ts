@@ -42,12 +42,12 @@ export class NameReserveComponent {
      let address = this._reserveForm.value.addressUsd;
      let fee = this._reserveForm.value.reservationFee;
      this.nameService.reserveName(name,String(fee)).then((res)=>{
-       if(res) this._modal._displayResult = "Name is now reserved for you!";
-       else this._modal._displayResult = "Name cannot be reserved!";
+       console.log(res);
+       if(res) this._modal._displayResult = ` ${name} reservation request sent to Blockchain!`;
       this._reserveForm.reset();
      }).catch((ex)=>{
        console.log(ex);
-      this._modal._displayResult = "Exception occurred";
+       this._modal._displayResult = `${name} cannot be reserved!`;
      });    
   }
 

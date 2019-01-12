@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-// import Web3 from 'web3';
-// import { default as contract } from 'truffle-contract';
 
 import { Subject } from 'rxjs/Rx';
 // import * as Web3 from 'web3';
@@ -56,7 +54,6 @@ export class Web3Service {
         return;
       }
       this.activeAccount = accs[0];
-      console.log("Account in MM ", this.activeAccount);
     });
     // to get main account
     setInterval(() => this.refreshAccounts(), 100);
