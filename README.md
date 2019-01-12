@@ -63,3 +63,5 @@ Screenshots
 
 ![Scheme](screenshots/bid_price.png)
 
+Pushing to Heroku
+
