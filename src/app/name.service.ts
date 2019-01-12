@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Web3Service } from './util/web3.service';
-import dns_contract_json from './../../build/contracts/DNSRegistry.json';
-import web3 from 'web3-utils';
+import * as dns_contract_json from './../../build/contracts/DNSRegistry.json';
+
+declare let require: any;
+const web3 = require('web3');
 
 @Injectable()
 export class NameService {
@@ -30,16 +32,23 @@ export class NameService {
   public reserveName(name: string, fee: string) {
 
     return this.DNSRegistry.deployed().then((instance) => {
+      console.log(instance);
+      console.log(this.web3Service.activeAccount);
       return instance.reserveName(name,
-        { from: this.web3Service.activeAccount, value: web3.toWei(fee, "ether") })
+        { from: this.web3Service.activeAccount, value: web3.utils.toWei(fee, "ether") })
         .then(function (result) {
           console.log(result);
-        }).then(() => {
+        }).catch(err => {
+          console.log(err);
+        })
+        .then(() => {
           return instance.checkNameExists.call(name).then(function (reserved) {
             console.log(reserved);
             return reserved;
           });
-        });
+        }).catch(err => {
+          console.log(err);
+        })
     });
   }
 
@@ -55,7 +64,7 @@ export class NameService {
   public bidOnName(name: string, bid: string) {
     return this.DNSRegistry.deployed().then((instance) => {
       return instance.bid(name,
-        { from: this.web3Service.activeAccount, value: web3.toWei(bid, "ether") })
+        { from: this.web3Service.activeAccount, value: web3.utils.toWei(bid, "ether") })
         .then((result) => {
           console.log(result);
           return true;
@@ -92,7 +101,7 @@ export class NameService {
 
   public sendEtherToName(name: String, amount: number) {
     return this.DNSRegistry.deployed().then((instance) => {
-      return instance.sendEtherToName(name, { from: this.web3Service.activeAccount, value: web3.toWei(amount, "ether") })
+      return instance.sendEtherToName(name, { from: this.web3Service.activeAccount, value: web3.utils.toWei(amount, "ether") })
         .then((result) => {
           console.log(result);
           return true;

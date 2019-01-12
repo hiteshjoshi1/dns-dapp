@@ -3,7 +3,7 @@
     <div class="container">
       <a class="navbar-brand" href="#">
         <i class="fa d-inline fa-lg fa-cloud"></i>
-        <b>Cheers Opensource !</b>
+        <b>DApp Sample</b>
       </a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbar2SupportedContent"
         aria-controls="navbar2SupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,22 +13,40 @@
         <ul class="navbar-nav">
           <li class="nav-item">
             <a class="nav-link" routerLink="/dashboard" routerLinkActive="active">
-              <i class="fa d-inline fa-lg fa-bookmark-o"></i>DNS Home</a>
+              <i class="fa d-inline fa-lg fa-home"></i>DNS Home</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/reserve" routerLinkActive="active">
-              <i class="fa d-inline fa-lg fa-bookmark-o"></i> Reserve Names</a>
+              <i class="fa d-inline fa-lg fas fa-trophy"></i> Reserve Names</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" routerLink="/bid" routerLinkActive="active">
-              <i class="fa d-inline fa-lg fa-envelope-o"></i> Bid on names</a>
+              <i class="fa d-inline fa-lg fa-gavel"></i> Bid on names</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/rules" routerLinkActive="active">
+              <i class="fa d-inline fa-lg fas fa-info-circle"></i>House Rules</a>
+          </li>
+          
         </ul>
       </div>
     </div>
   </nav>
-  <div class="py-5 text-center opaque-overlay w-100">
+  <!-- <div class="py-5 text-center opaque-overlay w-100"> -->
+    <div class =".container-fluid">
+      <div class="jumbotron jumbotron-fluid py-5">
+          <div class="container text-center">
+          <router-outlet></router-outlet>
+          <div class="fixed-bottom">
+              <div class ="social">
+                  <a href="https://github.com/hiteshjoshi1/" class="fa fa-github"></a>
+                  <a href="https://www.linkedin.com/in/hiteshjoshi1/" class="fa fa-linkedin"></a>
+                  <a href="https://twitter.com/joshi_ji" class="fa fa-twitter"></a>
+              </div>
+          </div>
+     </div>
 
-    <router-outlet></router-outlet>
-  </div>
+
+
+    </div> 
 </div>

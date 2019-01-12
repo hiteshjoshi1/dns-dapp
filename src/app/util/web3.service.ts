@@ -1,13 +1,18 @@
 import { Injectable } from '@angular/core';
-import Web3 from 'web3';
-import { default as contract } from 'truffle-contract';
+// import Web3 from 'web3';
+// import { default as contract } from 'truffle-contract';
+
 import { Subject } from 'rxjs/Rx';
+// import * as Web3 from 'web3';
+declare let require: any;
+const Web3 = require('web3');
+import * as contract from 'truffle-contract';
 
 declare let window: any;
 
 @Injectable()
 export class Web3Service {
-  private web3: Web3;
+  private web3: any;
   private accounts: string[];
   public ready = false;
   public accountsObservable = new Subject<string[]>();
@@ -22,6 +27,18 @@ export class Web3Service {
 
   public bootstrapWeb3() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
+    // if (typeof window.web3 !== 'undefined') {
+    //   // Use Mist/MetaMask's provider
+    //   this.web3 = new Web3(window.web3.currentProvider);
+    // } else {
+    //   console.log('No web3? You should consider trying MetaMask!');
+
+    //   // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
+    //   Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
+
+    //   // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
+    //   this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+    // }
     if (typeof window.web3 !== 'undefined') {
       // Use Mist/MetaMask's provider
       this.web3 = new Web3(window.web3.currentProvider);
@@ -30,7 +47,6 @@ export class Web3Service {
 
       // Hack to provide backwards compatibility for Truffle, which uses web3js 0.20.x
       Web3.providers.HttpProvider.prototype.sendAsync = Web3.providers.HttpProvider.prototype.send;
-
       // fallback - use your fallback strategy (local node / hosted node + in-dapp id mgmt / fail)
       this.web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
     }
@@ -40,14 +56,15 @@ export class Web3Service {
         return;
       }
       this.activeAccount = accs[0];
+      console.log("Account in MM ", this.activeAccount);
     });
     // to get main account
     setInterval(() => this.refreshAccounts(), 100);
   }
 
-  public getWeb3(): Web3 {
-    return this.web3;
-  }
+  // public getWeb3(): Web3 {
+  //   return this.web3;
+  // }
 
   public async artifactsToContract(artifacts) {
     if (!this.web3) {

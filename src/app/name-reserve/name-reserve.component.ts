@@ -46,6 +46,7 @@ export class NameReserveComponent {
        else this._modal._displayResult = "Name cannot be reserved!";
       this._reserveForm.reset();
      }).catch((ex)=>{
+       console.log(ex);
       this._modal._displayResult = "Exception occurred";
      });    
   }

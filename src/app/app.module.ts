@@ -21,6 +21,7 @@ import { NameOwnerComponent } from './name-owner/name-owner.component';
 import { NameAcceptBidComponent } from './name-accept-bid/name-accept-bid.component';
 import { ModalComponent } from './modal/modal.component';
 import { Web3Service } from './util/web3.service';
+import { RulesComponent } from './rules/rules.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { Web3Service } from './util/web3.service';
     NameHighestBidComponent,
     NameOwnerComponent,
     NameAcceptBidComponent,
-    ModalComponent
+    ModalComponent,
+    RulesComponent
   ],
   imports: [
     BrowserModule,

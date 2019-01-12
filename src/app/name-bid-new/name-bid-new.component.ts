@@ -44,8 +44,8 @@ export class NameBidNewComponent {
      this.nameService.bidOnName(name,String(fee))
      .then(result => { 
        console.log(result);
-       if(result) this._modal._displayResult = "Bid Accepted";
-       else this._modal._displayResult = "Bid Not Accepted";
+       if(result) this._modal._displayResult = "Bid Submitted";
+       else this._modal._displayResult = "Bid Not Submitted";
        });
      this._reserveForm.reset(); 
   }

@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { NameHomeComponent } from './../name-home/name-home.component';
 import { NameBidComponent } from './../name-bid/name-bid.component';
 import { NameDnsComponent } from './../name-dns/name-dns.component';
+import { RulesComponent } from '../rules/rules.component';
 // Create a Route Array
 const routes: Routes = 
 [
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: 'dashboard', component: NameHomeComponent },
   {path : 'reserve', component: NameDnsComponent },
-  {path : 'bid', component: NameBidComponent}
+  {path : 'bid', component: NameBidComponent},
+  {path: 'rules', component:RulesComponent}
 
 ];
 
