@@ -28,7 +28,7 @@ From the root folder - contract
 - Download the source
 - npm install
 - truffle compile
-- truffle migrate *
+- truffle migrate --network <network_name>
 - truffle test [Optional step]
 - ng build --prod
 - ng serve
