@@ -15,7 +15,7 @@
 - As a owner accept bids and transfer name ownership
 - Send money using names  
 
-### Tech details
+## Tech details
 - Project is developed using Angular 4.
 - Integrated with HD wallet - metamask for signing transactions to the network
 - Metamask is the web3 provider.
