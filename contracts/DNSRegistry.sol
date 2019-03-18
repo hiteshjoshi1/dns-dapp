@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity >=0.4.0 <0.6.0;
 
 import './Util.sol';
 import './ProtectReEntry.sol';
@@ -30,7 +30,7 @@ contract DNSRegistry is Util, ProtectReEntry {
      uint constant MAX_NAME_LENGTH = 25;
     
      //Initial fee tx goes to contract creator
-     address registryOwner;
+     address payable registryOwner;
     
      // events
      event DnsCreatedEvent(address _owner);
@@ -45,16 +45,16 @@ contract DNSRegistry is Util, ProtectReEntry {
      
     
      // constructor
-    function DNSRegistry() public {
+     constructor() public {
         registryOwner = msg.sender;
-        DnsCreatedEvent(msg.sender);
+        emit DnsCreatedEvent(msg.sender);
     }
     
     /**
       * Public Member to check Name Availability
       * 
       */
-    function checkNameExists(string _name) public view
+    function checkNameExists(string memory _name) public view
         returns(bool _exists)
         {
          bytes32 name = toBytes32(_name);
@@ -74,7 +74,7 @@ contract DNSRegistry is Util, ProtectReEntry {
      * Case sensitive
      * Only () _ - ! .  are allowed in the name
      */ 
-    function reserveName(string _name) 
+    function reserveName(string memory _name) 
            public payable returns(bool success)  
          {
          externalEnter();     
@@ -97,7 +97,7 @@ contract DNSRegistry is Util, ProtectReEntry {
             BidContainer bidContainer = new BidContainer(reserveNameFee);
             // add the first bid
             bidContainerMap[name] = bidContainer;
-            ReserveNameEvent(_name, reserveNameFee, msg.sender, created);
+            emit ReserveNameEvent(_name, reserveNameFee, msg.sender, created);
          }
          externalLeave();
          return created;
@@ -129,7 +129,7 @@ contract DNSRegistry is Util, ProtectReEntry {
      /**
       * Send Dough to a Name using the registry
       */
-    function sendEtherToName(string _name) public payable returns (bool) {
+    function sendEtherToName(string memory _name) public payable returns (bool) {
         externalEnter();
         uint amount = msg.value;
          require(msg.sender.balance > amount);
@@ -138,7 +138,7 @@ contract DNSRegistry is Util, ProtectReEntry {
          Library.DNSName storage dnsName = dnsNameMap[name];
          require(msg.sender != dnsName.owner);
          dnsName.owner.transfer(amount);
-         EtherSentToNameEvent(_name,amount);
+         emit EtherSentToNameEvent(_name,amount);
          externalLeave();
          return true;
      }
@@ -148,7 +148,7 @@ contract DNSRegistry is Util, ProtectReEntry {
       * Owner cannot bid on his own name - no artificial inflation of price
       * Bids should be higher than the highest bid received so far
       */ 
-    function bid(string _name) public payable {
+    function bid(string memory _name) public payable {
         externalEnter();
         bytes32  name = toBytes32(_name); 
         // name should be owned by someone before you bid
@@ -162,14 +162,14 @@ contract DNSRegistry is Util, ProtectReEntry {
         BidContainer bidContainer = bidContainerMap[name];
         uint bidPrice = msg.value;
         bidContainer.addBid(bidPrice,msg.sender);
-        HighestBidIncreasedEvent(msg.sender,msg.value);
+        emit HighestBidIncreasedEvent(msg.sender,msg.value);
         externalLeave();
      }
    
      /**
       * View function to get the Highest bid for a name
       */
-    function getHighestBidSoFar(string _name) public view 
+    function getHighestBidSoFar(string memory _name) public view 
       returns(uint bidPrice)
        {
          bytes32  name = toBytes32(_name);
@@ -178,8 +178,8 @@ contract DNSRegistry is Util, ProtectReEntry {
        return bidContainer.currentPrice();
      }
      
-    function getHighestBidder(string _name) public view
-        returns(address bidder)
+    function getHighestBidder(string memory _name) public view
+        returns(address payable bidder)
         {
        bytes32  name = toBytes32(_name);
        // find the BidContainer for this name
@@ -187,7 +187,7 @@ contract DNSRegistry is Util, ProtectReEntry {
        return bidContainer.topBidder();
      }
      
-    function getBidValue(string _name,address _address) public constant
+    function getBidValue(string memory _name,address _address) public view
         returns(uint bidval)
        {
        bytes32  name = toBytes32(_name);
@@ -202,7 +202,7 @@ contract DNSRegistry is Util, ProtectReEntry {
       * Allows to withdraw all previous overbidden bids
       */ 
      
-    function withdrawOverBiddenBid(string _name) public returns(bool done) {
+    function withdrawOverBiddenBid(string memory _name) public returns(bool done) {
         externalEnter();
         bytes32  name = toBytes32(_name);
         BidContainer bidContainer = bidContainerMap[name];
@@ -225,7 +225,7 @@ contract DNSRegistry is Util, ProtectReEntry {
                 bidContainer.addDefunctBid(amount, msg.sender);
                 return false;
             }
-            BidWithdrawnEvent(_name, msg.sender, amount);
+            emit BidWithdrawnEvent(_name, msg.sender, amount);
             externalLeave();
             return true;
       }
@@ -236,7 +236,7 @@ contract DNSRegistry is Util, ProtectReEntry {
 	   * ownership changes hands
 	   * Winners bid balance is adjusted 
 	   */ 
-	function acceptBidAndTransferOwnerShip(string _name) public
+	function acceptBidAndTransferOwnerShip(string memory _name) public
          returns(bool transferred)
          {
          externalEnter();
@@ -254,7 +254,7 @@ contract DNSRegistry is Util, ProtectReEntry {
          // if success, transfer ownserhip
            if (msg.sender.send(winningBid)) {
               
-           address winningBidder = getHighestBidder(_name);
+           address payable winningBidder = getHighestBidder(_name);
            dnsNameMap[name].price = winningBid;
            dnsNameMap[name].owner = winningBidder;
            BidContainer bidContainer = bidContainerMap[name];
@@ -263,9 +263,9 @@ contract DNSRegistry is Util, ProtectReEntry {
            require(bidContainer.setBidState(false,
            Library.BidStates.ACCEPTED, winningBidder) == true);
            isPayed = true;
-           
+            emit BidAcceptedEvent(_name,msg.sender,winningBidder,winningBid); 
            }
-          BidAcceptedEvent(_name,msg.sender,winningBidder,winningBid); 
+         
           externalLeave();
           return isPayed;
         }
@@ -278,7 +278,7 @@ contract DNSRegistry is Util, ProtectReEntry {
       * for maintaining their name in DNS
       * constraint - Only owner can release a Name
       */
-    function releaseOwnership(string _name) public 
+    function releaseOwnership(string memory _name) public 
         returns (bool _released) 
         {
         externalEnter();    
@@ -288,12 +288,12 @@ contract DNSRegistry is Util, ProtectReEntry {
          require(msg.sender == dnsNameMap[name].owner);
          dnsNameMap[name].price = 0; 
          dnsNameMap[name].exists = false;
-         ReleasedOwnershipEvent(_name);
+         emit ReleasedOwnershipEvent(_name);
          externalLeave();
          return true;
      }
 
-      function checkNamePrice(string _name) public view returns(uint){
+      function checkNamePrice(string memory _name) public view returns(uint){
                   bytes32  name = toBytes32(_name); 
          require(hasOwner(name));
          uint highestBid = getHighestBidSoFar(_name);
@@ -303,7 +303,7 @@ contract DNSRegistry is Util, ProtectReEntry {
          
      }
 
-     function getCurrentOwnerOfName(string _name) public view returns(address) {
+     function getCurrentOwnerOfName(string memory _name) public view returns(address) {
         bytes32  name = toBytes32(_name); 
          require(hasOwner(name));
          return dnsNameMap[name].owner;    
@@ -314,10 +314,10 @@ contract DNSRegistry is Util, ProtectReEntry {
       * Helps to test if the bids are repatraited correctly
       */
      function getTotalEtherHeldInContract() public view returns (uint) {
-         return this.balance;
+         return address(this).balance;
      }
     
-    function validateName(string _name) pure internal 
+    function validateName(string memory _name) pure internal 
        returns (bool allowed) 
        {
         bytes memory nameBytes = bytes(_name);
@@ -334,7 +334,7 @@ contract DNSRegistry is Util, ProtectReEntry {
                 // 0 - 9
                 // A - Z
                 // a - z 
-                (b >= 48 && b <= 57) || (b >= 65 && b <= 90) || (b >= 97 && b <= 122)
+                (b >= 0x30 && b <= 0x39) || (b >= 0x41 && b <= 0x5A) || (b >= 0x61 && b <= 0x7A)
             ) {
                 foundNonPunctuation = true;
                 continue;
@@ -347,7 +347,7 @@ contract DNSRegistry is Util, ProtectReEntry {
                 // -
                 // .
                 // _
-                b == 32 || b == 33 || b == 40 || b == 41 || b == 45 || b == 46 || b == 95    
+                b == 0x20 || b == 0x21 || b == 0x28 || b == 0x29 || b == 0x2D || b == 0x2E || b == 0x5F    
             ) {
                 continue;
             }

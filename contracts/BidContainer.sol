@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity >=0.4.0 <0.6.0;
 
 import './Bid.sol';
 
@@ -21,10 +21,10 @@ contract BidContainer {
     // All bids from an address so far are kept here
     mapping (address => uint) public balancesMap;
     // top bidder here
-    address  public topBidder;
+    address payable  public topBidder;
     
     // constructor
-    function BidContainer(uint _initPrice) public {
+      constructor(uint _initPrice) public {
          currentPrice = _initPrice;
          state = Library.BidContainerState.ACTIVE;
     }
@@ -34,7 +34,7 @@ contract BidContainer {
  * This can be called only if the user is outbidding the highest bid
  * Bidders total balance is tracked
  */
-    function addBid(uint _price, address _bidder) public returns(bool added) {
+    function addBid(uint _price, address payable _bidder) public returns(bool added) {
         Bid bid = new Bid(_price,_bidder);
         bidMap[_bidder] = bid;
         // add price it to sender balanace

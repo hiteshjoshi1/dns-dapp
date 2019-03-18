@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity >=0.4.0 <0.6.0;
 
 import './Library.sol';
 
@@ -11,19 +11,19 @@ contract Bid {
   bool public exists;
   address public owner ;
 
-  function Bid(uint _amount, address _owner) public {
+  
+  constructor(uint _amount, address _owner) public {
     amount = _amount;
     owner = _owner;
     state = Library.BidStates.OPEN;
     exists = true;
-  }
-  
+    }
   
   function setBidExists(bool _exists) public {
     exists = _exists;
   }
 
-  function getState() public constant returns (Library.BidStates) {
+  function getState() public view returns (Library.BidStates) {
     return state;
   }
 
