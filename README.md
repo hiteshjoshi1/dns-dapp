@@ -15,7 +15,7 @@
 - As a owner accept bids and transfer name ownership
 - Send money using names  
 
-### Tech details
+## Tech details
 - Project is developed using Angular 4.
 - Integrated with HD wallet - metamask for signing transactions to the network
 - Metamask is the web3 provider.
@@ -28,7 +28,7 @@ From the root folder - contract
 - Download the source
 - npm install
 - truffle compile
-- truffle migrate *
+- truffle migrate --network <network_name>
 - truffle test [Optional step]
 - ng build --prod
 - ng serve
@@ -62,4 +62,6 @@ Screenshots
 ![Scheme](screenshots/bid_compressed.PNG)
 
 ![Scheme](screenshots/bid_price.png)
+
+Pushing to Heroku
 
