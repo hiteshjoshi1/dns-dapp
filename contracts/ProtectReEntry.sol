@@ -1,4 +1,4 @@
-pragma solidity ^0.4.18;
+pragma solidity >=0.4.0 <0.6.0;
 contract ProtectReEntry {
 
     // true if we are inside an external function
