@@ -1,8 +1,9 @@
-pragma solidity >=0.4.0 <0.6.0;
+pragma solidity ^0.5.0;
+
 contract ProtectReEntry {
 
     // true if we are inside an external function
-    bool reentryProtector;
+     bool private reentryProtector;
 
     // Mark contract as having entered an external function.
     // Throws an exception if called twice with no externalLeave().

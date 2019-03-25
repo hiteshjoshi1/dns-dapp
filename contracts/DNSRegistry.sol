@@ -1,4 +1,4 @@
-pragma solidity >=0.4.0 <0.6.0;
+pragma solidity ^0.5.0;
 
 import './Util.sol';
 import './ProtectReEntry.sol';
@@ -88,17 +88,20 @@ contract DNSRegistry is Util, ProtectReEntry {
          require(validateDNSNameProposal(reserveNameFee));
         
          // if pre cond are good, send some love to the developer
-         bool sentOk = registryOwner.send(reserveNameFee);
+        //  bool sentOk = registryOwner.send(reserveNameFee);
          // love shown to the developer
-         bool created = false;
-         if (sentOk) {
-            created = createNewDNSEntry(name,reserveNameFee);
+        //  bool created = false;
+        //  if (sentOk) {
+          bool created = createNewDNSEntry(name,reserveNameFee);
             // create the BidContainer
             BidContainer bidContainer = new BidContainer(reserveNameFee);
             // add the first bid
             bidContainerMap[name] = bidContainer;
+            if(created){
+              registryOwner.transfer(reserveNameFee);
+            }
             emit ReserveNameEvent(_name, reserveNameFee, msg.sender, created);
-         }
+        //  }
          externalLeave();
          return created;
      }
@@ -160,8 +163,8 @@ contract DNSRegistry is Util, ProtectReEntry {
         require(msg.value > getHighestBidSoFar(_name));
         
         BidContainer bidContainer = bidContainerMap[name];
-        uint bidPrice = msg.value;
-        bidContainer.addBid(bidPrice,msg.sender);
+     
+        bidContainer.addBid(msg.value,msg.sender);
         emit HighestBidIncreasedEvent(msg.sender,msg.value);
         externalLeave();
      }
@@ -219,12 +222,13 @@ contract DNSRegistry is Util, ProtectReEntry {
           Library.BidStates.WITHDRAWN, msg.sender) == true);
         
         // send amount back
-        if (!msg.sender.send(amount)) {
-                // if amount sending failed, create a new bid 
-                // as we have canceled the old one
-                bidContainer.addDefunctBid(amount, msg.sender);
-                return false;
-            }
+        // if (!msg.sender.send(amount)) {
+        //         // if amount sending failed, create a new bid 
+        //         // as we have canceled the old one
+        //         bidContainer.addDefunctBid(amount, msg.sender);
+        //         return false;
+        //     }
+            msg.sender.transfer(amount);
             emit BidWithdrawnEvent(_name, msg.sender, amount);
             externalLeave();
             return true;

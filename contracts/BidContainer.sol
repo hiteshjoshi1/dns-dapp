@@ -1,9 +1,12 @@
-pragma solidity >=0.4.0 <0.6.0;
+pragma solidity ^0.5.0;
 
 import './Bid.sol';
+import 'node_modules/openzeppelin-solidity/contracts/math/SafeMath.sol';
+
+
 
 contract BidContainer {
-    
+    using SafeMath for uint256;
     using Library for Library.BidStates;
     using Library for Library.BidContainerState;
     // Once the ownership is transferred , container is inactive
@@ -34,14 +37,16 @@ contract BidContainer {
  * This can be called only if the user is outbidding the highest bid
  * Bidders total balance is tracked
  */
-    function addBid(uint _price, address payable _bidder) public returns(bool added) {
-        Bid bid = new Bid(_price,_bidder);
-        bidMap[_bidder] = bid;
+    function addBid(uint _price, address payable _bidder) external returns(bool added) {
+
         // add price it to sender balanace
-        balancesMap[_bidder] += _price;
+        balancesMap[_bidder] = balancesMap[_bidder].add(_price);
         // update the currentPrice
         currentPrice = _price;
         topBidder = _bidder;
+        Bid bid = new Bid(_price,_bidder);
+        bidMap[_bidder] = bid;
+
         return true;
     }
     /**
@@ -66,7 +71,7 @@ contract BidContainer {
      * Balance is reduced as the winning bid goes to Name holder
      */
     function adjustBalanceOnWinning(address _winner, uint _winningBid) public {
-        balancesMap[_winner] -= _winningBid;
+        balancesMap[_winner] = balancesMap[_winner].sub(_winningBid); 
     }
         
   /**
@@ -86,9 +91,9 @@ contract BidContainer {
      * In case money transfer fails and bid is already removed from system
      * This function adds it back in without changing the topBidder or price
      */
-	function addDefunctBid(uint _price, address _bidder) public returns(bool added) {
-        Bid bid = new Bid(_price,_bidder);
-        bidMap[_bidder] = bid;
-        return true;
-    }
+	// function addDefunctBid(uint _price, address _bidder) public returns(bool added) {
+    //     Bid bid = new Bid(_price,_bidder);
+    //     bidMap[_bidder] = bid;
+    //     return true;
+    // }
 }
