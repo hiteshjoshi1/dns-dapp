@@ -4,6 +4,10 @@
 
 ### written by Hitesh Joshi - sendmailtojoshi@gmail.com
 
+# Thanks to the good people of Heroku, the app is live at
+
+https://fierce-plains-84557.herokuapp.com/dashboard
+
 ### What you can you do with the DNS DAapp
 
 - Reserve a name with as low as 0.1 ether
