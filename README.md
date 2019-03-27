@@ -18,8 +18,12 @@ https://fierce-plains-84557.herokuapp.com/dashboard
 - As a owner accept bids and transfer name ownership
 - Send money using names
 
+<<<<<<< HEAD
 ### Tech details
 
+=======
+## Tech details
+>>>>>>> 1f0e5449c9117ecb3f6ea9ed7fc2989a24598921
 - Project is developed using Angular 4.
 - Integrated with HD wallet - metamask for signing transactions to the network
 - Metamask is the web3 provider.
@@ -34,7 +38,11 @@ From the root folder - contract
 - Download the source
 - npm install
 - truffle compile
+<<<<<<< HEAD
 - truffle migrate \*
+=======
+- truffle migrate --network <network_name>
+>>>>>>> 1f0e5449c9117ecb3f6ea9ed7fc2989a24598921
 - truffle test [Optional step]
 - ng build --prod
 - ng serve
@@ -67,3 +75,9 @@ Screenshots
 ![Scheme](screenshots/bid_compressed.PNG)
 
 ![Scheme](screenshots/bid_price.png)
+<<<<<<< HEAD
+=======
+
+Pushing to Heroku
+
+>>>>>>> 1f0e5449c9117ecb3f6ea9ed7fc2989a24598921
