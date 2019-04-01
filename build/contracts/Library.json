@@ -1,0 +1,475 @@
+{
+  "contractName": "Library",
+  "abi": [],
+  "bytecode": "0x604c602c600b82828239805160001a60731460008114601c57601e565bfe5b5030600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a7230582027ff32a9b37f9ce4af53be2117401f0c2c9753a1820974bd0aa646f4d43526290029",
+  "deployedBytecode": "0x73000000000000000000000000000000000000000030146080604052600080fdfea165627a7a7230582027ff32a9b37f9ce4af53be2117401f0c2c9753a1820974bd0aa646f4d43526290029",
+  "sourceMap": "33:323:3:-;;132:2:-1;166:7;155:9;146:7;137:37;252:7;246:14;243:1;238:23;232:4;229:33;270:1;265:20;;;;222:63;;265:20;274:9;222:63;;298:9;295:1;288:20;328:4;319:7;311:22;352:7;343;336:24",
+  "deployedSourceMap": "33:323:3:-;;;;;;;;",
+  "source": "pragma solidity >=0.4.0 <0.6.0;\n\nlibrary Library {\n  struct DNSName {\n     bytes32 name;\n     address payable owner;\n     uint price;\n     bool exists;\n   }\n\n    enum BidStates {\n        NULL,\n        OPEN,\n        ACCEPTED,\n        OVERBIDDEN,\n        WITHDRAWN\n    }\n\n    enum BidContainerState {\n        NULL,\n        ACTIVE,\n        INACTIVE\n    }   \n}",
+  "sourcePath": "/Users/hitesh/myworkspace/dns-dapp/contracts/Library.sol",
+  "ast": {
+    "absolutePath": "/Users/hitesh/myworkspace/dns-dapp/contracts/Library.sol",
+    "exportedSymbols": {
+      "Library": [
+        1221
+      ]
+    },
+    "id": 1222,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1201,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".0",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:31:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1221,
+        "linearizedBaseContracts": [
+          1221
+        ],
+        "name": "Library",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "Library.DNSName",
+            "id": 1210,
+            "members": [
+              {
+                "constant": false,
+                "id": 1203,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "75:12:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 1202,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "75:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1205,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "94:21:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address_payable",
+                  "typeString": "address payable"
+                },
+                "typeName": {
+                  "id": 1204,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "94:15:3",
+                  "stateMutability": "payable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1207,
+                "name": "price",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "122:10:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1206,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "122:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1209,
+                "name": "exists",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "139:11:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1208,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "139:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "DNSName",
+            "nodeType": "StructDefinition",
+            "scope": 1221,
+            "src": "53:103:3",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "Library.BidStates",
+            "id": 1216,
+            "members": [
+              {
+                "id": 1211,
+                "name": "NULL",
+                "nodeType": "EnumValue",
+                "src": "187:4:3"
+              },
+              {
+                "id": 1212,
+                "name": "OPEN",
+                "nodeType": "EnumValue",
+                "src": "201:4:3"
+              },
+              {
+                "id": 1213,
+                "name": "ACCEPTED",
+                "nodeType": "EnumValue",
+                "src": "215:8:3"
+              },
+              {
+                "id": 1214,
+                "name": "OVERBIDDEN",
+                "nodeType": "EnumValue",
+                "src": "233:10:3"
+              },
+              {
+                "id": 1215,
+                "name": "WITHDRAWN",
+                "nodeType": "EnumValue",
+                "src": "253:9:3"
+              }
+            ],
+            "name": "BidStates",
+            "nodeType": "EnumDefinition",
+            "src": "162:106:3"
+          },
+          {
+            "canonicalName": "Library.BidContainerState",
+            "id": 1220,
+            "members": [
+              {
+                "id": 1217,
+                "name": "NULL",
+                "nodeType": "EnumValue",
+                "src": "307:4:3"
+              },
+              {
+                "id": 1218,
+                "name": "ACTIVE",
+                "nodeType": "EnumValue",
+                "src": "321:6:3"
+              },
+              {
+                "id": 1219,
+                "name": "INACTIVE",
+                "nodeType": "EnumValue",
+                "src": "337:8:3"
+              }
+            ],
+            "name": "BidContainerState",
+            "nodeType": "EnumDefinition",
+            "src": "274:77:3"
+          }
+        ],
+        "scope": 1222,
+        "src": "33:323:3"
+      }
+    ],
+    "src": "0:356:3"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/hitesh/myworkspace/dns-dapp/contracts/Library.sol",
+    "exportedSymbols": {
+      "Library": [
+        1221
+      ]
+    },
+    "id": 1222,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 1201,
+        "literals": [
+          "solidity",
+          ">=",
+          "0.4",
+          ".0",
+          "<",
+          "0.6",
+          ".0"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:31:3"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "library",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 1221,
+        "linearizedBaseContracts": [
+          1221
+        ],
+        "name": "Library",
+        "nodeType": "ContractDefinition",
+        "nodes": [
+          {
+            "canonicalName": "Library.DNSName",
+            "id": 1210,
+            "members": [
+              {
+                "constant": false,
+                "id": 1203,
+                "name": "name",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "75:12:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                },
+                "typeName": {
+                  "id": 1202,
+                  "name": "bytes32",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "75:7:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bytes32",
+                    "typeString": "bytes32"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1205,
+                "name": "owner",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "94:21:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address_payable",
+                  "typeString": "address payable"
+                },
+                "typeName": {
+                  "id": 1204,
+                  "name": "address",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "94:15:3",
+                  "stateMutability": "payable",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1207,
+                "name": "price",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "122:10:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                },
+                "typeName": {
+                  "id": 1206,
+                  "name": "uint",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "122:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1209,
+                "name": "exists",
+                "nodeType": "VariableDeclaration",
+                "scope": 1210,
+                "src": "139:11:3",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bool",
+                  "typeString": "bool"
+                },
+                "typeName": {
+                  "id": 1208,
+                  "name": "bool",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "139:4:3",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_bool",
+                    "typeString": "bool"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "DNSName",
+            "nodeType": "StructDefinition",
+            "scope": 1221,
+            "src": "53:103:3",
+            "visibility": "public"
+          },
+          {
+            "canonicalName": "Library.BidStates",
+            "id": 1216,
+            "members": [
+              {
+                "id": 1211,
+                "name": "NULL",
+                "nodeType": "EnumValue",
+                "src": "187:4:3"
+              },
+              {
+                "id": 1212,
+                "name": "OPEN",
+                "nodeType": "EnumValue",
+                "src": "201:4:3"
+              },
+              {
+                "id": 1213,
+                "name": "ACCEPTED",
+                "nodeType": "EnumValue",
+                "src": "215:8:3"
+              },
+              {
+                "id": 1214,
+                "name": "OVERBIDDEN",
+                "nodeType": "EnumValue",
+                "src": "233:10:3"
+              },
+              {
+                "id": 1215,
+                "name": "WITHDRAWN",
+                "nodeType": "EnumValue",
+                "src": "253:9:3"
+              }
+            ],
+            "name": "BidStates",
+            "nodeType": "EnumDefinition",
+            "src": "162:106:3"
+          },
+          {
+            "canonicalName": "Library.BidContainerState",
+            "id": 1220,
+            "members": [
+              {
+                "id": 1217,
+                "name": "NULL",
+                "nodeType": "EnumValue",
+                "src": "307:4:3"
+              },
+              {
+                "id": 1218,
+                "name": "ACTIVE",
+                "nodeType": "EnumValue",
+                "src": "321:6:3"
+              },
+              {
+                "id": 1219,
+                "name": "INACTIVE",
+                "nodeType": "EnumValue",
+                "src": "337:8:3"
+              }
+            ],
+            "name": "BidContainerState",
+            "nodeType": "EnumDefinition",
+            "src": "274:77:3"
+          }
+        ],
+        "scope": 1222,
+        "src": "33:323:3"
+      }
+    ],
+    "src": "0:356:3"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.5.0+commit.1d4f565a.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.3",
+  "updatedAt": "2019-04-01T07:51:43.072Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}

@@ -1,4 +1,4 @@
-require('dotenv').config();
+require("dotenv").config();
 const Web3 = require("web3");
 const web3 = new Web3();
 const HDWalletProvider = require("truffle-hdwallet-provider");
@@ -15,16 +15,26 @@ module.exports = {
       gas: 4600000
     },
     ropsten: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://ropsten.infura.io/v3/" + process.env.ROPSTEN_API_KEY, 1, 4),
+      provider: () =>
+        new HDWalletProvider(
+          process.env.MNENOMIC,
+          "https://ropsten.infura.io/v3/" + process.env.ROPSTEN_API_KEY,
+          1,
+          4
+        ),
       network_id: 3,
-      from: '0x7FaC253bcB2Cd8334572ecde46a8035eAd2105e8'
+      from: "0x7FaC253bcB2Cd8334572ecde46a8035eAd2105e8"
     },
     kovan: {
-      provider: () => new HDWalletProvider(process.env.MNENOMIC, "https://kovan.infura.io/v3/" + process.env.KOVAN_API_KEY, 1, 4),
+      provider: () =>
+        new HDWalletProvider(
+          process.env.MNENOMIC,
+          "https://kovan.infura.io/v3/" + process.env.KOVAN_API_KEY,
+          1,
+          4
+        ),
       network_id: 42,
-      from: '0x7FaC253bcB2Cd8334572ecde46a8035eAd2105e8'
-    },
+      from: "0xc604D6350ecA95EF80a686Dcd36A19ce3d3699f4"
+    }
   }
 };
-
-
