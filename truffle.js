@@ -17,8 +17,8 @@ module.exports = {
     ropsten: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MNENOMIC,
-          "https://ropsten.infura.io/v3/" + process.env.ROPSTEN_API_KEY,
+          "blade advance bread crouch next steak reduce dress consider labor sail lizard",
+          "https://ropsten.infura.io/v3/" + "ed55affe07804359846dd5eebb11c774",
           1,
           4
         ),
@@ -28,13 +28,22 @@ module.exports = {
     kovan: {
       provider: () =>
         new HDWalletProvider(
-          process.env.MNENOMIC,
-          "https://kovan.infura.io/v3/" + process.env.KOVAN_API_KEY,
+          "blade advance bread crouch next steak reduce dress consider labor sail lizard",
+          "https://kovan.infura.io/v3/" + process.env.API_KEY,
           1,
           4
         ),
       network_id: 42,
       from: "0xc604D6350ecA95EF80a686Dcd36A19ce3d3699f4"
+    },
+    rinkeby: {
+      provider: new HDWalletProvider(
+        "blade advance bread crouch next steak reduce dress consider labor sail lizard",
+        "https://rinkeby.infura.io/v3/" + "ed55affe07804359846dd5eebb11c774",
+        0,
+        4
+      ),
+      network_id: 4
     }
   }
 };

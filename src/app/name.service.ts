@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Web3Service } from './util/web3.service';
-import * as dns_contract_json from './../../build/contracts/DNSRegistry.json';
+import { Injectable } from "@angular/core";
+import { Web3Service } from "./util/web3.service";
+import * as dns_contract_json from "./../../build/contracts/DNSRegistry.json";
+import { StoreService } from "./util/store.service";
 
 declare let require: any;
-const web3 = require('web3');
+const web3 = require("web3");
 
 @Injectable()
 export class NameService {
   DNSRegistry: any;
-  constructor(private web3Service: Web3Service) {}
+  constructor(
+    private storeService: StoreService,
+    private web3Service: Web3Service
+  ) {}
 
   initializeContract() {
     this.web3Service
@@ -26,27 +30,25 @@ export class NameService {
     return reserved;
   }
 
-  public reserveName(name: string, fee: string) {
-    return this.DNSRegistry.deployed().then(instance => {
-      return instance
-        .reserveName(name, {
-          from: this.web3Service.activeAccount,
-          value: web3.utils.toWei(fee, 'ether')
-        })
-        .then(function(result) {
-          console.log(result);
-          return result;
-        });
-      // .catch(err => {
-      //   console.log(err);
-      // });
-    });
+  public async reserveName(name: string, fee: string) {
+    try {
+      let instance = await this.DNSRegistry.deployed();
+      let fromAccount = this.web3Service.activeAccount;
+      let result = await instance.reserveName(name, {
+        from: fromAccount,
+        value: web3.utils.toWei(fee, "ether")
+      });
+
+      this.storeService.addtoLocalStore(name, fee, fromAccount);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   public getPrice(name: string) {
     return this.DNSRegistry.deployed()
       .then(instance => {
-        console.log(instance);
         return instance.checkNamePrice.call(name);
       })
       .then(function(price) {
@@ -63,7 +65,7 @@ export class NameService {
       return instance
         .bid(name, {
           from: this.web3Service.activeAccount,
-          value: web3.utils.toWei(bid, 'ether')
+          value: web3.utils.toWei(bid, "ether")
         })
         .then(
           result => {
@@ -107,7 +109,7 @@ export class NameService {
       return instance
         .sendEtherToName(name, {
           from: this.web3Service.activeAccount,
-          value: web3.utils.toWei(amount, 'ether')
+          value: web3.utils.toWei(amount, "ether")
         })
         .then(
           result => {
@@ -122,29 +124,45 @@ export class NameService {
     });
   }
 
-  public acceptBidAndTransfer(name: String) {
-    return this.DNSRegistry.deployed().then(instance => {
-      return instance
-        .acceptBidAndTransferOwnerShip(name, {
-          from: this.web3Service.activeAccount
-        })
-        .then(
-          result => {
-            console.log(result);
-            return true;
-          },
-          ex => {
-            console.log(ex);
-            return false;
-          }
-        );
-    });
+  public async acceptBidAndTransfer(name: String) {
+    try {
+      let instance = await this.DNSRegistry.deployed();
+      let result = instance.acceptBidAndTransferOwnerShip(name, {
+        from: this.web3Service.activeAccount
+      });
+      console.log(result);
+      this.storeService.removeFromLocalStore(
+        name,
+        this.web3Service.activeAccount
+      );
+      return true;
+    } catch (ex) {
+      console.log(ex);
+      return false;
+    }
+
+    // return this.DNSRegistry.deployed().then(instance => {
+    //   return instance
+    //     .acceptBidAndTransferOwnerShip(name, {
+    //       from: this.web3Service.activeAccount
+    //     })
+    //     .then(
+    //       result => {
+    //         console.log(result);
+    //         return true;
+    //       },
+    //       ex => {
+    //         console.log(ex);
+    //         return false;
+    //       }
+    //     );
+    // });
   }
 
   public withdrawBid(name: String) {
     return this.DNSRegistry.deployed().then(instance => {
       return instance.getHighestBidder.call(name).then(bidder => {
-        console.log('bidder', bidder);
+        console.log("bidder", bidder);
         if (bidder != this.web3Service.activeAccount) {
           return instance
             .withdrawOverBiddenBid(name, {
@@ -153,17 +171,22 @@ export class NameService {
             .then(
               result => {
                 console.log(result);
-                return 'Bid Withdrawn';
+                return "Bid Withdrawn";
               },
               ex => {
                 console.log(ex);
-                return 'Exception';
+                return "Exception";
               }
             );
         } else {
-          return 'Cannot withdraw Highest bid';
+          return "Cannot withdraw Highest bid";
         }
       });
     });
+  }
+
+  public async listenForTransactionConfirmation(txHash: String) {
+    let status = await this.web3Service.getTransactionReceipt(txHash);
+    console.log(status);
   }
 }
