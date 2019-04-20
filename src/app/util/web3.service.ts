@@ -6,6 +6,9 @@ declare let require: any;
 const Web3 = require("web3");
 import * as contract from "truffle-contract";
 import { from } from "rxjs/observable/from";
+import { bindNodeCallback } from "rxjs/observable/bindNodeCallback";
+import { of } from "rxjs/observable/of";
+import { tap, map, catchError } from "rxjs/operators";
 
 declare let window: any;
 
@@ -29,9 +32,8 @@ export class Web3Service {
     });
 
     window.ethereum.on("accountsChanged", async accounts => {
-      console.log(accounts);
       this.activeAccount = accounts[0];
-      this.accountObservable.next(this.getPrimaryAccount());
+      this.accountObservable.next(accounts[0]);
     });
   }
 
@@ -101,7 +103,6 @@ export class Web3Service {
     }
 
     const contractAbstraction = contract(artifacts);
-    console.log(window.web3.currentProvider);
     contractAbstraction.setProvider(window.web3.currentProvider);
     return contractAbstraction;
   }
@@ -163,4 +164,25 @@ export class Web3Service {
   private getPrimaryAccount(): string {
     return this.activeAccount;
   }
+
+  /** Returns all accounts available */
+  // public getAccounts(): Observable<string[]> {
+  //   return bindNodeCallback(window.web3.eth.getAccounts())();
+  // }
+
+  // /** Get the current account */
+  // public currentAccount(): Observable<string | Error> {
+  //   if (this.web3.eth.defaultAccount) {
+  //     return of(this.web3.eth.defaultAccount);
+  //   } else {
+  //     return this.getAccounts().pipe(
+  //       tap((accounts: string[]) => {
+  //         if (accounts.length === 0) { throw new Error('No accounts available'); }
+  //       }),
+  //       map((accounts: string[]) => accounts[0]),
+  //       tap((account: string) => this.web3.defaultAccount = account),
+  //       catchError((err: Error) => of(err))
+  //     );
+  //   }
+  // }
 }

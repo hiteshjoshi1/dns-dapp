@@ -9,13 +9,14 @@ const web3 = require("web3");
 @Injectable()
 export class NameService {
   DNSRegistry: any;
+
   constructor(
     private storeService: StoreService,
     private web3Service: Web3Service
   ) {}
 
-  initializeContract() {
-    this.web3Service
+  async initializeContract() {
+    await this.web3Service
       .artifactsToContract(dns_contract_json)
       .then(DNSAbstraction => {
         this.DNSRegistry = DNSAbstraction;
@@ -188,5 +189,49 @@ export class NameService {
   public async listenForTransactionConfirmation(txHash: String) {
     let status = await this.web3Service.getTransactionReceipt(txHash);
     console.log(status);
+  }
+
+  public async nameReserveEventHandler() {
+    let instance = await this.DNSRegistry.deployed();
+
+    let event = instance.ReserveNameEvent({});
+    event
+      .on("data", result => {
+        console.log("Kaki....");
+        console.log(result.args);
+      })
+      .on("changed", event => {
+        console.log("can can");
+        console.log(event);
+      })
+      .on("error", error => console.log(error));
+  }
+
+  public async handleBidAcceptedEvent() {
+    let instance = await this.DNSRegistry.deployed();
+
+    let event = instance.BidAcceptedEvent({});
+    event
+      .on("data", result => {
+        let newOwner = result.args.newOwner;
+        let latestPrice = result.args.latestPrice / 1000000000000000000;
+        console.log(result.args.latestPrice);
+        console.log(result.args.newOwner);
+        console.log(result.args._name);
+        let nameOwned = result.args._name;
+        if (newOwner === this.web3Service.activeAccount) {
+          console.log("Yay , new Owner");
+          this.storeService.addtoLocalStore(
+            nameOwned,
+            latestPrice.toString(),
+            newOwner
+          );
+        }
+      })
+      .on("changed", event => {
+        console.log("can can");
+        console.log(event);
+      })
+      .on("error", error => console.log(error));
   }
 }

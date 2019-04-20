@@ -1,29 +1,59 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ChangeDetectionStrategy
+} from "@angular/core";
 import { StoreService, Name } from "../util/store.service";
 import { Web3Service } from "../util/web3.service";
-import { Observable } from "rxjs";
+import { Subscription } from "rxjs/Subscription";
 
 @Component({
   selector: "app-my-names",
   templateUrl: "./my-names.component.html",
-  styleUrls: ["./my-names.component.css"]
+  styleUrls: ["./my-names.component.css"],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class MyNamesComponent implements OnInit {
-  constructor(private storeService: StoreService) {}
+  constructor(
+    private storeService: StoreService,
+    private cd: ChangeDetectorRef
+  ) {}
 
-  names: Observable<Name[]>;
+  names: Name[];
+
+  private subscription: Subscription = new Subscription();
+
+  // account: String;
 
   ngOnInit() {
-    this.names = this.storeService.getAllFromLocalStore();
+    this.subscription.add(
+      this.storeService.getAllFromLocalStore().subscribe(res => {
+        console.log(res);
+        this.names = res;
+        this.cd.markForCheck();
+      })
+    );
+    // this.watchAccount();
   }
 
   // private watchAccount() {
-  //   this.web3Service.accountObservable.subscribe(account => {
-  //     console.log("Account changed -  fetch the changed Names", account);
-  //     // fetch the changed Names
-  //     this.refetchUsers();
-
-  //     // this.names = this.storeService.getAllFromLocalStore();
-  //   });
+  //   this.subscription.add(
+  //     this.web3Service.accountObservable.subscribe(acc => {
+  //       console.log("Account changed -  fetch the changed Names", acc);
+  //       this.storeService.getAllFromLocalStore().subscribe(res => {
+  //         this.names = res;
+  //         this.cd.markForCheck();
+  //       });
+  //     })
+  //   );
   // }
+  public ngOnDestroy(): void {
+    /*
+     * magic kicks in here: All subscriptions which were added
+     * with "subscription.add" are canceled too!
+     */
+    this.subscription.unsubscribe();
+  }
 }

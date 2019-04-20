@@ -43,9 +43,7 @@ export class StoreService {
   private getUsers(): Name[] {
     let ownerAddress = this.web3Service.activeAccount;
     let names = localStorage.getItem(ownerAddress);
-    console.log("1.5" + names);
     this.reservedNames = JSON.parse(names);
-    console.log(this.reservedNames);
     return this.reservedNames;
   }
 }

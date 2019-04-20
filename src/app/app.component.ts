@@ -13,7 +13,9 @@ export class AppComponent implements OnInit {
   title = "A Tutorial on distributed DNS";
 
   constructor(private _nameService: NameService) {}
-  ngOnInit() {
-    this._nameService.initializeContract();
+  async ngOnInit() {
+    await this._nameService.initializeContract();
+    await this._nameService.nameReserveEventHandler();
+    await this._nameService.handleBidAcceptedEvent();
   }
 }
