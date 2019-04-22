@@ -14,57 +14,62 @@ export class StoreService {
     this.watchAccount();
   }
 
-  nameSubject = new BehaviorSubject<Name[]>(this.getUsers());
+  // nameSubject = new BehaviorSubject<Name[]>(this.getUsers());
+  private nameSubject: BehaviorSubject<Name[]> = new BehaviorSubject([]);
 
-  private reservedNames: Array<Name>;
+  namesObservable: Observable<Name[]> = this.nameSubject.asObservable();
+
+  // private reservedNames: Array<Name>;
 
   public addtoLocalStore(name: string, fee: string, ownerAddress: string) {
-    // Difference between String(class) and string(Primitive) - use and prefer Primitives
     let nameObj: Name = { name: name, fee: fee };
-    this.reservedNames = JSON.parse(
+    let ownedNames: Name[] = JSON.parse(
       localStorage.getItem(ownerAddress.toLowerCase())
     );
-    if (!this.reservedNames || !this.reservedNames.length) {
-      this.reservedNames = [];
+    if (!ownedNames || !ownedNames.length) {
+      ownedNames = [];
     }
 
-    this.reservedNames.push(nameObj);
-    let x = this.reservedNames;
-    localStorage.setItem(ownerAddress.toLowerCase(), JSON.stringify(x));
-    this.nameSubject.next(x);
+    // this.reservedNames.push(nameObj);
+    // let x = this.reservedNames;
+    localStorage.setItem(
+      ownerAddress.toLowerCase(),
+      JSON.stringify([...ownedNames, nameObj])
+    );
+    this.nameSubject.next([...ownedNames, nameObj]);
   }
 
-  public getAllFromLocalStore(): Observable<Name[]> {
-    return this.nameSubject.asObservable();
-  }
+  // public getAllFromLocalStore(): Observable<Name[]> {
+  //   return this.web3Service.accountObservable.map(ownerAddress => {
+  //     let names = localStorage.getItem(ownerAddress.toLowerCase());
+  //     return JSON.parse(names);
+  //   });
+  // }
 
   public removeFromLocalStore(name: String, ownerAddress: string) {
-    this.reservedNames = JSON.parse(
+    let ownedNames: Name[] = JSON.parse(
       localStorage.getItem(ownerAddress.toLowerCase())
     );
     // using lodash remove to  remove the element
-    var removed = _.remove(this.reservedNames, item => item.name === name);
+    var removed = _.remove(ownedNames, item => item.name === name);
     localStorage.setItem(
       ownerAddress.toLowerCase(),
-      JSON.stringify(this.reservedNames)
+      JSON.stringify(ownedNames)
     );
-    this.nameSubject.next(this.reservedNames);
+    this.nameSubject.next(ownedNames);
   }
 
-  private getUsers(): Name[] {
-    let ownerAddress = this.web3Service.activeAccount;
-    let names = localStorage.getItem(ownerAddress.toLowerCase());
-    this.reservedNames = JSON.parse(names);
-    return this.reservedNames;
-  }
+  // private getUsers(): Name[] {
+  //   let ownerAddress = this.web3Service.activeAccount;
+  //   let names = localStorage.getItem(ownerAddress.toLowerCase());
+  //   this.reservedNames = JSON.parse(names);
+  //   return this.reservedNames;
+  // }
 
   public watchAccount() {
     this.web3Service.accountObservable.subscribe(acc => {
-      console.log(" 1 " + acc);
       let names = localStorage.getItem(acc.toLowerCase());
-      console.log(names);
-      this.reservedNames = JSON.parse(names);
-      this.nameSubject.next(this.reservedNames);
+      this.nameSubject.next(JSON.parse(names));
     });
   }
 }

@@ -3,7 +3,8 @@ import {
   OnInit,
   AfterViewInit,
   ChangeDetectorRef,
-  ChangeDetectionStrategy
+  ChangeDetectionStrategy,
+  NgZone
 } from "@angular/core";
 import { StoreService, Name } from "../util/store.service";
 import { Web3Service } from "../util/web3.service";
@@ -18,37 +19,25 @@ import { Subscription } from "rxjs/Subscription";
 export class MyNamesComponent implements OnInit {
   constructor(
     private storeService: StoreService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private ngZone: NgZone
   ) {}
 
   names: Name[];
 
   private subscription: Subscription = new Subscription();
 
-  // account: String;
-
   ngOnInit() {
     this.subscription.add(
-      this.storeService.getAllFromLocalStore().subscribe(res => {
-        console.log("Fetching value from Observable", res);
-        this.names = res;
+      this.storeService.namesObservable.subscribe(res => {
         this.cd.markForCheck();
+        this.ngZone.run(() => {
+          this.names = res;
+        });
+        // this.cd.markForCheck();
       })
     );
-    // this.watchAccount();
   }
-
-  // private watchAccount() {
-  //   this.subscription.add(
-  //     this.web3Service.accountObservable.subscribe(acc => {
-  //       console.log("Account changed -  fetch the changed Names", acc);
-  //       this.storeService.getAllFromLocalStore().subscribe(res => {
-  //         this.names = res;
-  //         this.cd.markForCheck();
-  //       });
-  //     })
-  //   );
-  // }
   public ngOnDestroy(): void {
     /*
      * magic kicks in here: All subscriptions which were added
