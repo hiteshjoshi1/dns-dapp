@@ -30,7 +30,7 @@ export class MyNamesComponent implements OnInit {
   ngOnInit() {
     this.subscription.add(
       this.storeService.getAllFromLocalStore().subscribe(res => {
-        console.log(res);
+        console.log("Fetching value from Observable", res);
         this.names = res;
         this.cd.markForCheck();
       })
