@@ -25,6 +25,7 @@ import { RulesComponent } from "./rules/rules.component";
 import { StoreService } from "./util/store.service";
 import { MyNamesComponent } from "./my-names/my-names.component";
 import { APP_INITIALIZER } from "@angular/core";
+import { MyBidsComponent } from './my-bids/my-bids.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { APP_INITIALIZER } from "@angular/core";
     NameAcceptBidComponent,
     ModalComponent,
     RulesComponent,
-    MyNamesComponent
+    MyNamesComponent,
+    MyBidsComponent
   ],
   imports: [
     BrowserModule,

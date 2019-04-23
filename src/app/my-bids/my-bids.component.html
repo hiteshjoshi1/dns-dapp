@@ -1,0 +1,14 @@
+<div class="card" *ngIf="bids?.length > 0">
+  <div class="card-block p-5 bg-light">
+    <h3 class="card-header">My Bids</h3>
+    <div class="card-body" *ngFor="let bid of bids">
+      <div class="card-text">Name:{{ bid.name }}</div>
+      <div class="card-body" *ngFor="let fee of bid.bids">
+        <div class="card-text">Fee:{{ fee }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="card" *ngIf="!bids || bids?.length == 0">
+  <h3 class="card-header">You have not bid on any names yet !</h3>
+</div>

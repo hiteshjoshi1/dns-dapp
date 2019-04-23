@@ -1,7 +1,7 @@
 <div class="main-container">
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" routerLink="/dashboard" routerLinkActive="active">
         <i class="fa d-inline fa-lg fa-cloud"></i>
         <b>DApp Sample</b>
       </a>
@@ -22,7 +22,7 @@
         id="navbar2SupportedContent"
       >
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a
               class="nav-link"
               routerLink="/dashboard"
@@ -30,7 +30,7 @@
             >
               <i class="fa d-inline fa-lg fa-home"></i>DNS Home</a
             >
-          </li>
+          </li> -->
           <li class="nav-item">
             <a class="nav-link" routerLink="/reserve" routerLinkActive="active">
               <i class="fa d-inline fa-lg fas fa-trophy"></i> Reserve Names</a
@@ -41,9 +41,16 @@
               <i class="fa d-inline fa-lg fa-gavel"></i> Bid on names</a
             >
           </li>
+
           <li class="nav-item">
-            <a class="nav-link" routerLink="/rules" routerLinkActive="active">
-              <i class="fa d-inline fa-lg fas fa-info-circle"></i>House Rules</a
+            <a class="nav-link" routerLink="/mynames" routerLinkActive="active">
+              <i class="fa d-inline fa-lg fa-gavel"></i>My Names</a
+            >
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/mybids" routerLinkActive="active">
+              <i class="fa d-inline fa-lg fa-gavel"></i>My Bids</a
             >
           </li>
         </ul>

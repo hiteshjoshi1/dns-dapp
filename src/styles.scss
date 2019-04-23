@@ -1,12 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
 @import "../node_modules/bootstrap/scss/bootstrap.scss";
 
-$enable-rounded:            true !default;
-$enable-shadows:            true;
-$enable-transitions:        true;
-$enable-hover-media-query:  false;
-$enable-grid-classes:       true;
-$enable-print-styles:       true;
+$enable-rounded: true !default;
+$enable-shadows: true;
+$enable-transitions: true;
+$enable-hover-media-query: false;
+$enable-grid-classes: true;
+$enable-print-styles: true;
 
 // Variables
 //
@@ -26,56 +26,58 @@ $theme-colors: (
 $body-bg: white;
 $body-color: #333;
 
-
 $body-color-inverse: invert($body-color) !default;
 $link-color: #12bbad;
 
 // Fonts
-$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+$font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+  "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+  "Segoe UI Symbol";
 $headings-font-family: $font-family-base;
 $display-font-family: $font-family-base;
 $font-weight-normal: 200;
 $headings-font-weight: 200;
-$lead-font-size:   1.30rem;
+$lead-font-size: 1.3rem;
 
 $spacer: 1.5rem;
 
- 
-html,body {
-   height:100%;
+html,
+body {
+  height: 100%;
 }
 
 .bg-gradient {
-	background: linear-gradient(-30deg, transparentize(theme-color("secondary"), 0.1) 0%, transparentize(theme-color("primary"), 0.1) 50%, transparentize(theme-color("primary"), 0.05) 100%);
-  color:white;
+  background: linear-gradient(
+    -30deg,
+    transparentize(theme-color("secondary"), 0.1) 0%,
+    transparentize(theme-color("primary"), 0.1) 50%,
+    transparentize(theme-color("primary"), 0.05) 100%
+  );
+  color: white;
 }
-
 
 .section-dark-opaque {
   position: relative;
-  color:map-get($theme-colors, 'light');
-  background-size:cover;
+  color: map-get($theme-colors, "light");
+  background-size: cover;
   background-position: center;
-	&:before {
+  &:before {
     position: absolute;
-    top:0px;
-    left:0px;
-    width:100%;
+    top: 0px;
+    left: 0px;
+    width: 100%;
     height: 100%;
-    content: ' ';
-    background: rgba(map-get($theme-colors, 'dark'), 0.75);
+    content: " ";
+    background: rgba(map-get($theme-colors, "dark"), 0.75);
   }
 }
 
-
-
 .left-align {
-position:absolute;
- left:0px 
+  position: absolute;
+  left: 0px;
 }
 
 .right-align {
-position:absolute;
- right:0px 
+  position: absolute;
+  right: 0px;
 }
-

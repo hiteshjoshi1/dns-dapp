@@ -39,8 +39,8 @@ export class NameService {
         from: fromAccount,
         value: web3.utils.toWei(fee, "ether")
       });
-
-      this.storeService.addtoLocalStore(name, fee, fromAccount);
+      console.log(result);
+      this.storeService.addNametoLocalStore(name, fee, fromAccount);
       return result;
     } catch (err) {
       console.log(err);
@@ -61,30 +61,22 @@ export class NameService {
       });
   }
 
-  public bidOnName(name: string, bid: string) {
-    return this.DNSRegistry.deployed().then(instance => {
-      return instance
-        .bid(name, {
-          from: this.web3Service.activeAccount,
-          value: web3.utils.toWei(bid, "ether")
-        })
-        .then(
-          result => {
-            console.log(result);
-            return true;
-          },
-          ex => {
-            console.log(ex);
-            return false;
-          }
-        );
-      // .then( () => {
-      //   return instance.getHighestBidSoFar.call(name).then(function (reserved) {
-      //     console.log(reserved);
-      //     return reserved;
-      //   });
-      // });
-    });
+  public async bidOnName(name: string, bid: string) {
+    try {
+      let fromAccount = this.web3Service.activeAccount;
+      let fee = web3.utils.toWei(bid, "ether");
+      let instance = await this.DNSRegistry.deployed();
+      let result = await instance.bid(name, {
+        from: this.web3Service.activeAccount,
+        value: web3.utils.toWei(bid, "ether")
+      });
+
+      console.log(result);
+      this.storeService.addBidToLocalStore(name, fee, fromAccount);
+      return result;
+    } catch (ex) {
+      console.log(ex);
+    }
   }
 
   public getOwner(name: String) {
@@ -132,7 +124,7 @@ export class NameService {
         from: this.web3Service.activeAccount
       });
       console.log(result);
-      this.storeService.removeFromLocalStore(
+      this.storeService.removeNameFromLocalStore(
         name,
         this.web3Service.activeAccount
       );
@@ -217,19 +209,24 @@ export class NameService {
         let latestPrice = result.args.latestPrice / 1000000000000000000;
         console.log(result.args.latestPrice);
         console.log(result.args.newOwner);
-        console.log(result.args._name);
+
         let nameOwned = result.args._name;
-        if (newOwner === this.web3Service.activeAccount) {
-          console.log("Yay , new Owner");
-          this.storeService.addtoLocalStore(
-            nameOwned,
-            latestPrice.toString(),
-            newOwner
-          );
-        }
+
+        this.storeService.removeBidFromLocalStore(
+          nameOwned,
+          newOwner,
+          latestPrice.toString()
+        );
+
+        // if (newOwner === this.web3Service.activeAccount) {
+        this.storeService.addNametoLocalStore(
+          nameOwned,
+          latestPrice.toString(),
+          newOwner
+        );
+        // }
       })
       .on("changed", event => {
-        console.log("can can");
         console.log(event);
       })
       .on("error", error => console.log(error));

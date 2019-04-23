@@ -1,40 +1,49 @@
 .main-container {
-    overflow-x: hidden !important;
+  overflow-x: hidden !important;
 }
 
 .py-5 {
-    overflow-y: scroll;
-    height:690px;
-    /* background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg'); */
+  overflow-y: scroll;
+  height: 690px;
+  /* background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg'); */
 }
 
 .fa {
-    padding: 13px;
-    font-size: 13px;
-    text-align: center;
-    text-decoration: none;
-    margin: 5px 2px;
-    border-radius: 50%;
-  }
-  
-  .fa:hover {
-      opacity: 0.7;
-  }
-  
-  .fa-twitter {
-    background: #55ACEE;
-    color: white;
-  }
-  .fa-linkedin {
-    background: #007bb5;
-    color: white;
-  }
-  .fa-github {
-    background: white;
-    color: black;
-    border: .5px solid;
-  }
+  padding: 13px;
+  font-size: 13px;
+  text-align: center;
+  text-decoration: none;
+  margin: 5px 2px;
+  border-radius: 50%;
+}
 
-  .social{
-      float:right;
-  }
+.fa:hover {
+  opacity: 0.7;
+}
+
+.fa-twitter {
+  background: #55acee;
+  color: white;
+}
+.fa-linkedin {
+  background: #007bb5;
+  color: white;
+}
+.fa-github {
+  background: white;
+  color: black;
+  border: 0.5px solid;
+}
+
+.social {
+  float: right;
+}
+
+/* input {
+  outline: 0;
+  border-width: 0 0 2px;
+  border-color: blue;
+}
+input:focus {
+  border-color: green;
+} */
