@@ -1,0 +1,14 @@
+<div class="card" *ngIf="names?.length > 0">
+  <div class="card-block p-5 bg-light">
+    <h3 class="card-header">Names I own</h3>
+
+    <div class="card-body" *ngFor="let name of names">
+      <div class="card-title">Name:{{ name.name }}</div>
+      <div class="card-text">Price:{{ name.fee }}</div>
+    </div>
+  </div>
+</div>
+
+<div class="card" *ngIf="!names || names?.length == 0">
+  <h3 class="card-header">You don't own any names yet. Reserve or Bid</h3>
+</div>

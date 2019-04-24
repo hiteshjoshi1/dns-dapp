@@ -1,10 +1,14 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
-import { Subject } from 'rxjs/Rx';
+import { Subject, Observable, BehaviorSubject } from "rxjs/Rx";
 // import * as Web3 from 'web3';
 declare let require: any;
-const Web3 = require('web3');
-import * as contract from 'truffle-contract';
+const Web3 = require("web3");
+import * as contract from "truffle-contract";
+import { from } from "rxjs/observable/from";
+import { bindNodeCallback } from "rxjs/observable/bindNodeCallback";
+import { of } from "rxjs/observable/of";
+import { tap, map, catchError } from "rxjs/operators";
 
 declare let window: any;
 
@@ -13,7 +17,9 @@ export class Web3Service {
   // private web3: any;
   private accounts: string[];
   public ready = false;
-  public accountsObservable = new Subject<string[]>();
+  public accountObservable = new BehaviorSubject<string>(
+    this.getPrimaryAccount()
+  );
 
   public activeAccount: string;
 
@@ -21,8 +27,13 @@ export class Web3Service {
     // window.addEventListener('load', event => {
     //   this.bootstrapWeb3();
     // });
-    window.addEventListener('load', async () => {
+    window.addEventListener("load", async () => {
       this.bootstrapWeb3();
+    });
+
+    window.ethereum.on("accountsChanged", async accounts => {
+      this.activeAccount = accounts[0];
+      this.accountObservable.next(accounts[0]);
     });
   }
 
@@ -65,7 +76,7 @@ export class Web3Service {
         await window.ethereum.enable();
         // Acccounts now exposed
       } catch (error) {
-        console.log('User denied account access...');
+        console.log("User denied account access...");
       }
     }
     // Legacy dapp browsers...
@@ -75,11 +86,13 @@ export class Web3Service {
     // Non-dapp browsers...
     else {
       console.log(
-        'Non-Ethereum browser detected. You should consider trying MetaMask!'
+        "Non-Ethereum browser detected. You should consider trying MetaMask!"
       );
     }
 
-    setInterval(() => this.refreshAccounts(), 100);
+    await this.refreshAccounts();
+
+    // setInterval(() => this.refreshAccounts(), 100);
   }
 
   public async artifactsToContract(artifacts) {
@@ -90,41 +103,43 @@ export class Web3Service {
     }
 
     const contractAbstraction = contract(artifacts);
-    console.log(window.web3.currentProvider);
     contractAbstraction.setProvider(window.web3.currentProvider);
     return contractAbstraction;
   }
 
-  private refreshAccounts() {
-    window.web3.eth.getAccounts().then(res => {
-      this.activeAccount = res[0];
-      this.ready = true;
-    });
-    // this.web3.eth.getAccounts((err, accs) => {
-    //   if (err != null) {
-    //     console.warn('There was an error fetching your accounts.');
-    //     return;
-    //   }
-
-    //   // Get the initial account balance so it can be displayed.
-    //   if (accs.length === 0) {
-    //     console.warn(
-    //       "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
-    //     );
-    //     return;
-    //   }
-    //   if (
-    //     !this.accounts ||
-    //     this.accounts.length !== accs.length ||
-    //     this.accounts[0] !== accs[0]
-    //   ) {
-    //     this.accountsObservable.next(accs);
-    //     this.accounts = accs;
-    //     this.activeAccount = accs[0];
-    //   }
-    //   this.ready = true;
+  private async refreshAccounts() {
+    let accounts = await window.web3.eth.getAccounts();
+    this.activeAccount = accounts[0];
+    // window.web3.eth.getAccounts().then(res => {
+    //   this.activeAccount = res[0];
+    this.ready = true;
     // });
   }
+
+  // this.web3.eth.getAccounts((err, accs) => {
+  //   if (err != null) {
+  //     console.warn('There was an error fetching your accounts.');
+  //     return;
+  //   }
+
+  //   // Get the initial account balance so it can be displayed.
+  //   if (accs.length === 0) {
+  //     console.warn(
+  //       "Couldn't get any accounts! Make sure your Ethereum client is configured correctly."
+  //     );
+  //     return;
+  //   }
+  //   if (
+  //     !this.accounts ||
+  //     this.accounts.length !== accs.length ||
+  //     this.accounts[0] !== accs[0]
+  //   ) {
+  //     this.accountsObservable.next(accs);
+  //     this.accounts = accs;
+  //     this.activeAccount = accs[0];
+  //   }
+  //   this.ready = true;
+  // });
 
   // public fixTruffleContractCompatibilityIssue(contract) {
   //   if (typeof contract.currentProvider.sendAsync !== 'function') {
@@ -136,5 +151,38 @@ export class Web3Service {
   //     };
   //   }
   //   return contract;
+  // }
+
+  public async getTransactionReceipt(txHash: String): Promise<String> {
+    let result = await window.web3.eth.getTransactionReceipt(txHash);
+    console.log(result);
+    return result.status;
+    // return "0x1";
+    // eth.getTransactionReceipt(transactionHash)
+  }
+
+  private getPrimaryAccount(): string {
+    return this.activeAccount;
+  }
+
+  /** Returns all accounts available */
+  // public getAccounts(): Observable<string[]> {
+  //   return bindNodeCallback(window.web3.eth.getAccounts())();
+  // }
+
+  // /** Get the current account */
+  // public currentAccount(): Observable<string | Error> {
+  //   if (this.web3.eth.defaultAccount) {
+  //     return of(this.web3.eth.defaultAccount);
+  //   } else {
+  //     return this.getAccounts().pipe(
+  //       tap((accounts: string[]) => {
+  //         if (accounts.length === 0) { throw new Error('No accounts available'); }
+  //       }),
+  //       map((accounts: string[]) => accounts[0]),
+  //       tap((account: string) => this.web3.defaultAccount = account),
+  //       catchError((err: Error) => of(err))
+  //     );
+  //   }
   // }
 }
