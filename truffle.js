@@ -16,35 +16,38 @@ module.exports = {
       gas: 4600000
     },
     ropsten: {
-      provider: () =>
-        new HDWalletProvider(
-          "blade advance bread crouch next steak reduce dress consider labor sail lizard",
-          "https://ropsten.infura.io/v3/" + "ed55affe07804359846dd5eebb11c774",
+      provider: () => {
+        return new HDWalletProvider(
+          "local whale gorilla escape history seven foster liar proud carbon quality offer",
+          "https://ropsten.infura.io/v3/" + process.env.API_KEY,
           1,
           4
-        ),
+        );
+      },
       network_id: 3,
-      from: "0x7FaC253bcB2Cd8334572ecde46a8035eAd2105e8"
+      from: "0xDE4dB6938e4e54717FeCC48025Cc718bA28A4C99"
     },
     kovan: {
-      provider: () =>
-        new HDWalletProvider(
-          "blade advance bread crouch next steak reduce dress consider labor sail lizard",
+      provider: () => {
+        return new HDWalletProvider(
+          "local whale gorilla escape history seven foster liar proud carbon quality offer",
           "https://kovan.infura.io/v3/" + process.env.API_KEY,
-          1,
+          0,
           4
-        ),
+        );
+      },
       network_id: 42,
-      from: "0xc604D6350ecA95EF80a686Dcd36A19ce3d3699f4"
+      from: "0xDE4dB6938e4e54717FeCC48025Cc718bA28A4C99"
     },
     rinkeby: {
-      provider: new HDWalletProvider(
-        "blade advance bread crouch next steak reduce dress consider labor sail lizard",
-        "https://rinkeby.infura.io/v3/" + "ed55affe07804359846dd5eebb11c774",
-        0,
-        4
-      ),
-      network_id: 4
+      provider: () => {
+        return new HDWalletProvider(
+          "local whale gorilla escape history seven foster liar proud carbon quality offer",
+          "https://rinkeby.infura.io/v3/" + process.env.API_KEY
+        );
+      },
+      network_id: 4,
+      from: "0xDE4dB6938e4e54717FeCC48025Cc718bA28A4C99"
     }
   }
 };
