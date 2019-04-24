@@ -2,12 +2,6 @@
   overflow-x: hidden !important;
 }
 
-.py-5 {
-  overflow-y: scroll;
-  height: 690px;
-  /* background-image: url('https://pingendo.github.io/templates/sections/assets/cover_event.jpg'); */
-}
-
 .fa {
   padding: 13px;
   font-size: 13px;
@@ -38,12 +32,3 @@
 .social {
   float: right;
 }
-
-/* input {
-  outline: 0;
-  border-width: 0 0 2px;
-  border-color: blue;
-}
-input:focus {
-  border-color: green;
-} */
