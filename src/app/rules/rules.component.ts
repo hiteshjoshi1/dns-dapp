@@ -12,7 +12,7 @@ export class RulesComponent implements OnInit {
 
   ngOnInit() {
     this.rules = [
-      "Network Used - ",
+      "Network Used - KOVAN ",
       "Once a name is reserved the reserving person becomes the name owner.",
       "You can bid on a reserved name in the name auction.",
       "The auction only ends when the name owner accepts the highest bid.",
