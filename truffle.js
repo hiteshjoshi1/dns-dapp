@@ -18,9 +18,9 @@ module.exports = {
     ropsten: {
       provider: () => {
         return new HDWalletProvider(
-          "local whale gorilla escape history seven foster liar proud carbon quality offer",
+          process.env.MNEMONIC,
           "https://ropsten.infura.io/v3/" + process.env.API_KEY,
-          1,
+          0,
           4
         );
       },
@@ -30,7 +30,7 @@ module.exports = {
     kovan: {
       provider: () => {
         return new HDWalletProvider(
-          "local whale gorilla escape history seven foster liar proud carbon quality offer",
+          process.env.MNEMONIC,
           "https://kovan.infura.io/v3/" + process.env.API_KEY,
           0,
           4
@@ -42,8 +42,10 @@ module.exports = {
     rinkeby: {
       provider: () => {
         return new HDWalletProvider(
-          "local whale gorilla escape history seven foster liar proud carbon quality offer",
-          "https://rinkeby.infura.io/v3/" + process.env.API_KEY
+          process.env.MNEMONIC,
+          "https://rinkeby.infura.io/v3/" + process.env.API_KEY,
+          0,
+          4
         );
       },
       network_id: 4,
