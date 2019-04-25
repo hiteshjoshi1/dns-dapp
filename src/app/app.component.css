@@ -1,10 +1,6 @@
-.main-container {
-  overflow-x: hidden !important;
-}
-
 .fa {
-  padding: 13px;
-  font-size: 13px;
+  padding: 9px;
+  font-size: 9px;
   text-align: center;
   text-decoration: none;
   margin: 5px 2px;
@@ -31,4 +27,8 @@
 
 .social {
   float: right;
+}
+
+.name-container {
+  background-color: blue;
 }
