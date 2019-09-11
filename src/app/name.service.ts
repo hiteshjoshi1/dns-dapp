@@ -13,7 +13,7 @@ export class NameService {
   constructor(
     private storeService: StoreService,
     private web3Service: Web3Service
-  ) {}
+  ) { }
 
   async initializeContract() {
     await this.web3Service
@@ -34,7 +34,9 @@ export class NameService {
   public async reserveName(name: string, fee: string) {
     try {
       let instance = await this.DNSRegistry.deployed();
+      console.log(instance.address);
       let fromAccount = this.web3Service.activeAccount;
+      console.log(fromAccount);
       let result = await instance.reserveName(name, {
         from: fromAccount,
         value: web3.utils.toWei(fee, "ether")
@@ -52,7 +54,7 @@ export class NameService {
       .then(instance => {
         return instance.checkNamePrice.call(name);
       })
-      .then(function(price) {
+      .then(function (price) {
         console.log(price);
         return price;
       })
@@ -81,7 +83,7 @@ export class NameService {
 
   public getOwner(name: String) {
     return this.DNSRegistry.deployed().then(instance => {
-      return instance.getCurrentOwnerOfName.call(name).then(function(owner) {
+      return instance.getCurrentOwnerOfName.call(name).then(function (owner) {
         console.log(owner);
         return owner;
       });
@@ -90,7 +92,7 @@ export class NameService {
 
   public getHighestBid(name: String) {
     return this.DNSRegistry.deployed().then(instance => {
-      return instance.getHighestBidSoFar.call(name).then(function(bidValue) {
+      return instance.getHighestBidSoFar.call(name).then(function (bidValue) {
         console.log(bidValue);
         return bidValue;
       });

@@ -8,13 +8,20 @@ module.exports = {
   // This is where you let your truffle connect with your private chain
   networks: {
     development: {
-      host: "127.0.0.1",
-      port: 8545,
-      network_id: "5777", // Match any network id
-      chainId: "5777",
-      from: "0x527Fce59EB5332572cdc98Fc04f3c4fFAA9BCcD2",
-      gas: 4600000
+      provider: () => {
+        return new Web3.providers.HttpProvider(`http://127.0.0.1:8545`, 100000);
+      },
+      network_id: "*", // Match any network id
+      gasPrice: 0,
+      gas: 4500000
     },
+    // development: {
+    //   host: "127.0.0.1",
+    //   port: 8545,
+    //   network_id: "5777", // Match any network id
+    //   chainId: "5777",
+    //   gas: 4600000
+    // },
     ropsten: {
       provider: () => {
         return new HDWalletProvider(

@@ -17,9 +17,12 @@ export class Web3Service {
   // private web3: any;
   private accounts: string[];
   public ready = false;
+
   public accountObservable = new BehaviorSubject<string>(
-    this.getPrimaryAccount()
+    window.ethereum.selectedAddress
   );
+
+  public accObs = this.accountObservable.asObservable();
 
   public activeAccount: string;
 

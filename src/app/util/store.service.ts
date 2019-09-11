@@ -64,7 +64,9 @@ export class StoreService {
   }
 
   public watchAccount() {
-    this.web3Service.accountObservable.subscribe(acc => {
+    this.web3Service.accObs.subscribe(acc => {
+      console.log("Observing");
+      console.log(acc);
       let names = localStorage.getItem(acc.toLowerCase());
       this.nameSubject.next(JSON.parse(names));
 
