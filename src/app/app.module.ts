@@ -2,6 +2,7 @@ import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { HttpModule } from "@angular/http";
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from "./app.component";
 import { NameDnsComponent } from "./name-dns/name-dns.component";
@@ -26,6 +27,9 @@ import { StoreService } from "./util/store.service";
 import { MyNamesComponent } from "./my-names/my-names.component";
 import { APP_INITIALIZER } from "@angular/core";
 import { MyBidsComponent } from './my-bids/my-bids.component';
+import { DidEventsComponent } from './did-events/did-events.component';
+import { DidService } from './did.service';
+// import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
@@ -45,13 +49,16 @@ import { MyBidsComponent } from './my-bids/my-bids.component';
     ModalComponent,
     RulesComponent,
     MyNamesComponent,
-    MyBidsComponent
+    MyBidsComponent,
+    DidEventsComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     AppRoutingModule,
+    // MatTableModule,
+    // BrowserAnimationsModule,
     ReactiveFormsModule
   ],
   providers: [
@@ -60,14 +67,15 @@ import { MyBidsComponent } from './my-bids/my-bids.component';
     {
       provide: APP_INITIALIZER,
       useFactory: (Web3Service: Web3Service) =>
-        function() {
+        function () {
           return Web3Service.bootstrapWeb3();
         },
       deps: [Web3Service],
       multi: true
     },
-    NameService
+    NameService,
+    DidService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

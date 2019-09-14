@@ -8,6 +8,7 @@ import { NameReserveComponent } from "../name-reserve/name-reserve.component";
 import { NameBidNewComponent } from "../name-bid-new/name-bid-new.component";
 import { MyNamesComponent } from "../my-names/my-names.component";
 import { MyBidsComponent } from "../my-bids/my-bids.component";
+import { DidEventsComponent } from '../did-events/did-events.component';
 // Create a Route Array
 const routes: Routes = [
   { path: "", redirectTo: "/dashboard", pathMatch: "full" },
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: "name-reserve", component: NameReserveComponent },
   { path: "name-bid", component: NameBidNewComponent },
   { path: "mynames", component: MyNamesComponent },
-  { path: "mybids", component: MyBidsComponent }
+  { path: "mybids", component: MyBidsComponent },
+  { path: "did", component: DidEventsComponent }
 ];
 
 // Router.forRoot returns a module
@@ -27,4 +29,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, { enableTracing: false })],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

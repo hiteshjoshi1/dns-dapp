@@ -1,0 +1,101 @@
+<div class="card">
+  <div class="card-block p-5 bg-light">
+    <h3>DID Address</h3>
+    <hr />
+    <div class="form-group">
+      <form [formGroup]="_reserveForm" (ngSubmit)="didAddress()">
+        <input
+          type="text"
+          name="name"
+          id="name"
+          formControlName="didAddress"
+          class="form-control"
+          aria-describedby="nameHelp"
+          placeholder="Enter the DID Adress.."
+        />
+        <!-- <small id="nameHelp" class="form-text text-muted"
+          >Enter the DID Adress</small
+        > -->
+        <!-- error messages -->
+        <div
+          *ngIf="
+            _reserveForm.controls.didAddress.touched &&
+            _reserveForm.controls.didAddress.errors
+          "
+        >
+          <div
+            class="alert alert-danger"
+            *ngIf="_reserveForm.controls.didAddress.errors.required"
+          >
+            DID is required
+          </div>
+          <div
+            class="alert alert-danger"
+            *ngIf="_reserveForm.controls.didAddress.errors.minlength"
+          >
+            Name should atleast have
+            {{ _reserveForm.controls.nameUsd.errors.minlength.requiredLength }}
+            characters
+          </div>
+        </div>
+        <!-- <label for="fee">Reservation Fee</label> -->
+
+        <button
+          type="submit"
+          [disabled]="!_reserveForm.valid"
+          class="btn btn-primary"
+          data-toggle="modal"
+          data-target="#modal9"
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- <app-modal #modal modalId="modal1"></app-modal> -->
+
+<!-- <table>
+  <tr *ngFor="let event of events">
+    <td>{{ event.returnValues[0] }}</td>
+    <td>{{ event.returnValues[1] }}</td>
+    <td>{{ event.returnValues[2] }}</td>
+    <br />
+  </tr>
+</table> -->
+
+<div class="alert alert-danger" *ngIf="resultMesg != null">
+  {{ resultMesg }}
+</div>
+<table mdbTable class="table-bordered" *ngIf="events.length > 0">
+  <thead class="white lighten-1 black-text">
+    <tr>
+      <th *ngFor="let head of headElements" scope="col">{{ head }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr mdbTableCol *ngFor="let event of events">
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.eventType }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.transactionHash }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.type }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.utf_type }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.value }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.utf_value }}
+      </td>
+      <td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+        {{ event.valid }}
+      </td>
+    </tr>
+  </tbody>
+</table>

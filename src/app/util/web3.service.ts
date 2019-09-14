@@ -98,7 +98,7 @@ export class Web3Service {
     // setInterval(() => this.refreshAccounts(), 100);
   }
 
-  public async artifactsToContract(artifacts) {
+  public async artifactsToContract(artifacts): contract {
     if (!window.web3) {
       const delay = new Promise(resolve => setTimeout(resolve, 100));
       await delay;
