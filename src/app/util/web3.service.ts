@@ -2,8 +2,10 @@ import { Injectable } from "@angular/core";
 
 import { Subject, Observable, BehaviorSubject } from "rxjs/Rx";
 // import * as Web3 from 'web3';
-declare let require: any;
-const Web3 = require("web3");
+// declare let require: any;
+// const Web3 = require("web3");
+
+import Web3 from 'web3';
 import * as contract from "truffle-contract";
 import { from } from "rxjs/observable/from";
 import { bindNodeCallback } from "rxjs/observable/bindNodeCallback";
@@ -69,26 +71,36 @@ export class Web3Service {
     // to get main account
 
     // Modern dapp browsers...
-    if (window.ethereum) {
-      window.web3 = new Web3(window.ethereum);
-      try {
-        // Request account access if needed
-        await window.ethereum.enable();
-        // Acccounts now exposed
-      } catch (error) {
-        console.log("User denied account access...");
-      }
+    // if (window.ethereum) {
+    //   window.web3 = new Web3(window.ethereum);
+    //   try {
+    //     // Request account access if needed
+    //     await window.ethereum.enable();
+    //     // Acccounts now exposed
+    //   } catch (error) {
+    //     console.log("User denied account access...");
+    //   }
+    // }
+    // // Legacy dapp browsers...
+    // else if (window.web3) {
+    //   window.web3 = new Web3(window.web3.currentProvider);
+    // }
+    // // Non-dapp browsers...
+    // else {
+    //   console.log(
+    //     "Non-Ethereum browser detected. You should consider trying MetaMask!"
+    //   );
+    // }
+
+
+    try {
+      const provider = ('ethereum' in window) ? window['ethereum'] : Web3.givenProvider;
+      window.web3 = new Web3(provider);
+      await window.web3.currentProvider.enable();
+    } catch (err) {
+      throw new Error('Non-Ethereum browser detected. You should consider trying Mist or MetaMask!');
     }
-    // Legacy dapp browsers...
-    else if (window.web3) {
-      window.web3 = new Web3(window.web3.currentProvider);
-    }
-    // Non-dapp browsers...
-    else {
-      console.log(
-        "Non-Ethereum browser detected. You should consider trying MetaMask!"
-      );
-    }
+
 
     await this.refreshAccounts();
 

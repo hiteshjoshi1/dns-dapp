@@ -8,6 +8,8 @@
 
 https://fierce-plains-84557.herokuapp.com/dashboard
 
+The heroku deployment has metamask incompatability and I am too busy to deploy it again. That said the code is fixed and will run nicely in local.
+
 ### What you can you do with the DNS DAapp
 
 - Reserve a name with as low as 0.1 ether
@@ -28,19 +30,41 @@ https://fierce-plains-84557.herokuapp.com/dashboard
 
 ### Build Steps
 
-From the root folder - contract
+1. Clone the project
+2. Ensure that you have angular cli installed globally
+npm install -g @angular/cli
+3. Ensure that you have ganache cli installed  globally (for development)
+4. Start Ganache
+ganache-cli --deterministic
+5. npm install
+6. Compile Contracts
+ truffle compile
+7. Deploy contracts
+```
+truffle migrate --network development
+```
+8. Run test suite - optional
+```
+truffle test
+```
+9.Build it 
+```
+ng build --prod
+```
+10.Run it
+```
+ng serve
+```
 
-- Download the source
-- npm install
-- truffle compile
-- truffle migrate --network <network_name>
-- truffle test [Optional step]
-- ng build --prod
-- ng serve
+11. Note - You  need to import the ganache accounts to your metamask.
+Point your metamask to ganache and import using accounts private keys.
 
 * Note of truffle migrate
   Since this step deploys the contract to the blockchain. If you are using a private or actual Ethereum blockchain, please make sure that the account you have used in truffle.js is unlocked.
-  I have used my coinbase in truffle.js, so here goes the command.
+ 
+
+### Mainnet or TestNet Deployment only ->
+I have used my coinbase in truffle.js, so here goes the command.
 
 ```
 web3.personal.unlockAccount(eth.coinbase)
